@@ -20,7 +20,7 @@ public class DipendenteDao implements IDipendenteDao {
             ps.setString(1, dipendente.getCodiceFiscale());
             ps.setString(2, dipendente.getNome());
             ps.setString(3, dipendente.getCognome());
-            ps.setDate(4, Date.valueOf(dipendente.getDataNascita()));
+            ps.setDate  (4, Date.valueOf(dipendente.getDataNascita()));
             ps.setString(5, dipendente.getEmail());
             ps.setString(6, dipendente.getCellulare());
             ps.setString(7, dipendente.getIdDipendente());
@@ -31,6 +31,4 @@ public class DipendenteDao implements IDipendenteDao {
             System.out.println("Dipendente inserito con successo!");
         }
     }
-    }
-
 }
