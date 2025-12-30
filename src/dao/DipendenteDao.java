@@ -1,10 +1,8 @@
 package dao;
 
-import java.sql.Connection;
-import persona.dipendente.Dipendente;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Date;
+import java.sql.*;
+
+import persona.dipendente.*;
 
 public class DipendenteDao implements IDipendenteDao {
 
@@ -31,4 +29,64 @@ public class DipendenteDao implements IDipendenteDao {
             System.out.println("Dipendente inserito con successo!");
         }
     }
+
+    public void inserisciDipendente(Dipendente d) {
+        System.out.println("DEBUG: Inizio metodo inserimento...");
+        try (Connection conn = DBConnection.getConnection()) {
+            System.out.println("DEBUG: Connessione stabilita!");
+            String sql = "...";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // ... set dei parametri ...
+            System.out.println("DEBUG: Eseguo la query...");
+            ps.executeUpdate();
+            System.out.println("DEBUG: Query eseguita con successo!");
+        } catch (SQLException e) {
+            System.out.println("DEBUG: ERRORE TROVATO!");
+            e.printStackTrace();
+        }
+    }
+
+    public Dipendente login (String idDipendente, String password) throws SQLException{
+        String sql = "SELECT * FROM dipendenti WHERE id_dipendente = ? AND password = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+             ps.setString(1, idDipendente);
+             ps.setString(2, password);
+
+             ResultSet rs = ps.executeQuery();
+
+             if(rs.next()){
+                 TipoDipendente tipo = TipoDipendente.valueOf(rs.getString("tipo_dipendente"));
+
+                 switch (tipo){
+                     case MEDICO:
+                         return new Medico(
+                                 rs.getString("codice_fiscale"), rs.getString("nome"),
+                                 rs.getString("cognome"), rs.getDate("data_nascita").toLocalDate(),
+                                 rs.getString("email"), rs.getString("cellulare"),
+                                 rs.getString("id_dipendente"), rs.getString("password"), tipo
+                         );
+
+                     case INFERMIERE:
+                         return new Infermiere(
+                                 rs.getString("codice_fiscale"), rs.getString("nome"),
+                                 rs.getString("cognome"), rs.getDate("data_nascita").toLocalDate(),
+                                 rs.getString("email"), rs.getString("cellulare"),
+                                 rs.getString("id_dipendente"), rs.getString("password"), tipo
+                         );
+
+                     case AMMINISTRATORE:
+                         return new Amministratore(
+                                 rs.getString("codice_fiscale"), rs.getString("nome"),
+                                 rs.getString("cognome"), rs.getDate("data_nascita").toLocalDate(),
+                                 rs.getString("email"), rs.getString("cellulare"),
+                                 rs.getString("id_dipendente"), rs.getString("password"), tipo
+                         );
+                 }
+             }
+        }
+        return null;
+    }
+
 }
