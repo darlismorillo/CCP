@@ -12,52 +12,36 @@ public class Main {
             System.err.println("Driver non trovato! Controlla il Classpath.");
             e.printStackTrace();
         }
+
+        // Inizializzazione corretta
         IDipendenteDao dipendenteDao = new DipendenteDao();
 
+        // Medico per il test
         Medico nuovoMedico = new Medico(
-                "RSSMRA80A01H501U",
-                "Mario",
-                "Rossi",
-                LocalDate.of(1980, 1, 1),
-                "mario.rossi@ospedale.it",
-                "3331234567",
-                "MED001",
-                "password Sicura123",
+                "RSSMRA80A01H501G", "Maria", "Ross",
+                LocalDate.of(1980, 1, 1), "maria.ross@ospedale.it",
+                "3331234567", "MED007", "Pass123", // Attenzione: SQL accetta max 8 caratteri per pass
                 TipoDipendente.MEDICO
         );
 
         System.out.println("--- TEST INSERIMENTO ---");
         try {
-            // Proviamo a inserire il medico nel database
-            dipendenteDao.inserisciDipendente(nuovoMedico);
-            System.out.println("Medico inserito correttamente!");
+            dipendenteDao.addDipendente(nuovoMedico);
         } catch (SQLException e) {
-            System.err.println("Errore durante l'inserimento: " + e.getMessage());
-            // Se l'errore è "Duplicate entry", significa che il test era già stato fatto
+            System.err.println("Errore inserimento: " + e.getMessage());
         }
 
         System.out.println("\n--- TEST LOGIN ---");
-        String idPerLogin = "MED007";
-        String passPerLogin = "passwordSicura123";
-
         try {
-            // Cerchiamo di recuperare il dipendente con le credenziali
-            Dipendente utenteLoggato = dipendenteDao.login(idPerLogin, passPerLogin);
-
+            // Testiamo con un utente già presente nel tuo script SQL (es. MED001)
+            Dipendente utenteLoggato = dipendenteDao.login("MED001", "DocPass1");
             if (utenteLoggato != null) {
-                System.out.println("Login effettuato con successo!");
-                System.out.println("Benvenuto Dott. " + utenteLoggato.getNome() + " " + utenteLoggato.getCognome());
-                System.out.println("Ruolo: " + utenteLoggato.getTipoDipendente());
-
-                // Verifica polimorfismo
-                if (utenteLoggato instanceof Medico) {
-                    System.out.println("Il sistema riconosce correttamente che sei un Medico.");
-                }
+                System.out.println("Login OK: Benvenuto " + utenteLoggato.getNome());
             } else {
-                System.out.println("Login fallito: ID o Password errati.");
+                System.out.println("Login fallito!");
             }
         } catch (SQLException e) {
-            System.err.println("Errore tecnico durante il login: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
