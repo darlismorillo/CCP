@@ -4,6 +4,7 @@ import persona.dipendente.Dipendente;
 
 import java.sql.SQLException;
 
+//
 public class Accesso {
     private static Dipendente dipendenteLoggato;
     private final IDipendenteDao dipendenteDao = new DipendenteDao();
