@@ -3,8 +3,8 @@ package it.unipv.posw.careconnectpro.jdbc;
 import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.DipendenteDAO;
 import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.DipendenteDB;
 import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.IDipendenteDAO;
-import it.unipv.posw.careconnectpro.model.persona.Dipendente;
-import it.unipv.posw.careconnectpro.model.persona.TipoDipendente;
+import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
+import it.unipv.posw.careconnectpro.model.persona.dipendente.FactoryDipendente;
 
 public class FacadeSingletonDB {
 
@@ -27,7 +27,7 @@ public class FacadeSingletonDB {
     public Dipendente loginDipendente(String cf, String password) {
         DipendenteDB db = dipendenteDAO.selectDipendenteByCfAndPw(cf, password);
         if (db == null) return null;
-        return new Dipendente(
+        return FactoryDipendente.creaDipendente(db.getRuolo(),
             db.getCodiceFiscale(),
             db.getNome(),
             db.getCognome(),
@@ -36,7 +36,6 @@ public class FacadeSingletonDB {
             db.getNumeroTelefonico(),
             db.getIdDipendente(),
             db.getPassword(),
-            TipoDipendente.valueOf(db.getRuolo()),
             db.getDataInizio()
         );
     }

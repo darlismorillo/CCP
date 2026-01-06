@@ -13,7 +13,7 @@ public class DipendenteDAO implements IDipendenteDAO {
 
 	private Connection conn;
 	
-	public DipendenteDAO	()	{
+	public DipendenteDAO()	{
 	}
 	
 	@Override
@@ -21,11 +21,11 @@ public class DipendenteDAO implements IDipendenteDAO {
 		conn = ConnessioneDB.startConnection(conn, "ccp");
 		PreparedStatement ps1;
 		boolean check = true;
-		
+
 	    String query = "INSERT INTO ccp.DIPENDENTI " +
-                "(cf, nome, cognome, data_nascita, email, telefono, id_dipendente, password, ruolo, data_inizio) " +
+                "(CODICE_FISCALE, NOME, COGNOME, DATA_DI_NASCITA, EMAIL, NUMERO_TELEFONICO, ID_DIPENDENTE, PASSWORD, RUOLO, DATA_INIZIO) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?)";
-		
+
 		try {
 			ps1 = conn.prepareStatement(query);
 
@@ -47,7 +47,7 @@ public class DipendenteDAO implements IDipendenteDAO {
 			e.printStackTrace();
 			check = false;
 		}
-		
+
 		ConnessioneDB.closeConnection(conn);
 		return check;
 	}

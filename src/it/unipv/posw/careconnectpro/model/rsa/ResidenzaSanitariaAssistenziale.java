@@ -1,7 +1,7 @@
 package it.unipv.posw.careconnectpro.model.rsa;
 
 import it.unipv.posw.careconnectpro.jdbc.FacadeSingletonDB;
-import it.unipv.posw.careconnectpro.model.persona.Dipendente;
+import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 
 public class ResidenzaSanitariaAssistenziale implements IResidenzaSanitariaAssistenziale {
 

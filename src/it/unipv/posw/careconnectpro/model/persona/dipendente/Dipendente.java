@@ -1,4 +1,6 @@
-package it.unipv.posw.careconnectpro.model.persona;
+package it.unipv.posw.careconnectpro.model.persona.dipendente;
+
+import it.unipv.posw.careconnectpro.model.persona.Persona;
 
 import java.time.LocalDate;
 

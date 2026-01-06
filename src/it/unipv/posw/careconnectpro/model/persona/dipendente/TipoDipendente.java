@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.model.persona;
+package it.unipv.posw.careconnectpro.model.persona.dipendente;
 
 public enum TipoDipendente {
 	
