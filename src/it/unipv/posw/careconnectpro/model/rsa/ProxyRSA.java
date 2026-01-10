@@ -16,7 +16,7 @@ public class ProxyRSA implements IResidenzaSanitariaAssistenziale {
 
     @Override
     public boolean registrazioneDipendente(Dipendente dipendente) {
-        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == TipoDipendente.AMMINISTRATORE) {
+        if(utenteLoggato.getTipoDipendente() == TipoDipendente.AMMINISTRATORE) {
             return rsa.registrazioneDipendente(dipendente);
         }
         System.out.println("Solo gli amministratori possono registrare nuovi dipendenti");
