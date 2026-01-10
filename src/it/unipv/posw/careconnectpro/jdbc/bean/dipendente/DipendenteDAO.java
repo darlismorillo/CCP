@@ -16,7 +16,6 @@ public class DipendenteDAO implements IDipendenteDAO {
 	
 	@Override
 	public boolean insertDipendente(DipendenteDB d) {
-		conn = ConnessioneDB.startConnection(conn, "ccp");
 		PreparedStatement ps1;
 		boolean check = true;
 
@@ -48,14 +47,11 @@ public class DipendenteDAO implements IDipendenteDAO {
 
 			e.printStackTrace();
 			check = false;
+            return check;
 		}
-
-		ConnessioneDB.closeConnection(conn);
-		return check;
 	}
 	
 	public List<DipendenteDB> selectAllDipendenti() {
-		conn = ConnessioneDB.startConnection(conn, "ccp");
 		List<DipendenteDB> lista = new ArrayList<>();
         PreparedStatement ps1;
         ResultSet rs1;
@@ -85,14 +81,12 @@ public class DipendenteDAO implements IDipendenteDAO {
 			e.printStackTrace();
 		}
 
-		ConnessioneDB.closeConnection(conn);
 		return lista;
 	}
 	
 	@Override
     public DipendenteDB selectDipendenteByCf (String cf) {
 		DipendenteDB d = null;
-        conn = ConnessioneDB.startConnection(conn, "ccp");
         PreparedStatement ps1;
         ResultSet rs1;
         
@@ -123,15 +117,14 @@ public class DipendenteDAO implements IDipendenteDAO {
             e.printStackTrace();
             return null;
         } 
-        
-		ConnessioneDB.closeConnection(conn);
+
 		return d;
     }
 	
 	@Override
     public DipendenteDB selectDipendenteByCfAndPw (String cf, String pw) {
 		DipendenteDB d = null;
-        conn = ConnessioneDB.startConnection(conn, "ccp");
+
         PreparedStatement ps1;
         ResultSet rs1;
         
@@ -162,8 +155,7 @@ public class DipendenteDAO implements IDipendenteDAO {
             e.printStackTrace();
             return null;
         } 
-        
-		ConnessioneDB.closeConnection(conn);
+
 		return d;
     }
 }
