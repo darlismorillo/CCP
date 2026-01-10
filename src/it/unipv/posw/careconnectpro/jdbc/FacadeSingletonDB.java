@@ -6,53 +6,70 @@ import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.IDipendenteDAO;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.FactoryDipendente;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class FacadeSingletonDB {
-
-	private static FacadeSingletonDB istanzaDB;
-
-	private IDipendenteDAO dipendenteDAO;
-	
+    private static FacadeSingletonDB istanzaDB;
+    private IDipendenteDAO dipendenteDAO;
 
     private FacadeSingletonDB() {
-        dipendenteDAO = new DipendenteDAO();
+        try{
+            Connection conn = ConnessioneDB.getInstance().getConnection();
+            this.dipendenteDAO = new DipendenteDAO(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static FacadeSingletonDB getIstanzaFacade() {
-		if(istanzaDB == null) {
-			istanzaDB = new FacadeSingletonDB();
-		}
-		return istanzaDB;
-	}
-    
-    public Dipendente loginDipendente(String cf, String password) {
-        DipendenteDB db = dipendenteDAO.selectDipendenteByCfAndPw(cf, password);
-        if (db == null) return null;
-        return FactoryDipendente.creaDipendente(db.getRuolo(),
-            db.getCodiceFiscale(),
-            db.getNome(),
-            db.getCognome(),
-            db.getDataNascita(),
-            db.getEmail(),
-            db.getNumeroTelefonico(),
-            db.getIdDipendente(),
-            db.getPassword(),
-            db.getDataInizio()
-        );
+    public static synchronized FacadeSingletonDB getInstanceFacade() {
+        if (istanzaDB == null) {
+            istanzaDB = new FacadeSingletonDB();
+        }
+        return istanzaDB;
     }
-
-    public boolean insertDipendente(Dipendente d) {
-        DipendenteDB db = new DipendenteDB(
-                d.getCodiceFiscale(),
-                d.getNome(),
-                d.getCognome(),
-                d.getDataNascita(),
-                d.getEmail(),
-                d.getCellulare(),
-                d.getIdDipendente(),
-                d.getPassword(),
-                d.getTipoDipendente().name(),
-                d.getDataAssunzione());
-        return dipendenteDAO.insertDipendente(db);
-    }
+//
+//
+//    private FacadeSingletonDB() {
+//        dipendenteDAO = new DipendenteDAO();
+//    }
+//
+//    public static FacadeSingletonDB getIstanzaFacade() {
+//		if(istanzaDB == null) {
+//			istanzaDB = new FacadeSingletonDB();
+//		}
+//		return istanzaDB;
+//	}
+//
+//    public Dipendente loginDipendente(String cf, String password) {
+//        DipendenteDB db = dipendenteDAO.selectDipendenteByCfAndPw(cf, password);
+//        if (db == null) return null;
+//        return FactoryDipendente.creaDipendente(db.getRuolo(),
+//            db.getCodiceFiscale(),
+//            db.getNome(),
+//            db.getCognome(),
+//            db.getDataNascita(),
+//            db.getEmail(),
+//            db.getNumeroTelefonico(),
+//            db.getIdDipendente(),
+//            db.getPassword(),
+//            db.getDataInizio()
+//        );
+//    }
+//
+//    public boolean insertDipendente(Dipendente d) {
+//        DipendenteDB db = new DipendenteDB(
+//                d.getCodiceFiscale(),
+//                d.getNome(),
+//                d.getCognome(),
+//                d.getDataNascita(),
+//                d.getEmail(),
+//                d.getCellulare(),
+//                d.getIdDipendente(),
+//                d.getPassword(),
+//                d.getTipoDipendente().name(),
+//                d.getDataAssunzione());
+//        return dipendenteDAO.insertDipendente(db);
+//    }
 
 }

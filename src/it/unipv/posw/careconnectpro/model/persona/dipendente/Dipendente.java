@@ -8,6 +8,7 @@ public class Dipendente extends Persona implements IDipendente {
 
 	private String idDipendente;
 	private String password;
+    private static final int MAX_PASSWORD = 8;
 	private TipoDipendente tipoDipendente;
 	private LocalDate dataAssunzione;
 	
@@ -15,7 +16,7 @@ public class Dipendente extends Persona implements IDipendente {
 			String cellulare, String idDipendente, String password, TipoDipendente tipoDipendente, LocalDate dataAssunzione) {
 		super(codiceFiscale, nome, cognome, dataNascita, email, cellulare);
 		this.idDipendente = idDipendente;
-		this.password = password;
+		this.setPassword(password);
 		this.tipoDipendente = tipoDipendente;
 		this.dataAssunzione = dataAssunzione;
 	}
@@ -26,7 +27,14 @@ public class Dipendente extends Persona implements IDipendente {
 
 	@Override
 	public String getPassword() { return password; }
-	public void setPassword(String password) { this.password = password; }
+
+    @Override
+	public void setPassword(String password)  {
+        if (password != null && password.length() > MAX_PASSWORD) {
+            throw new IllegalArgumentException( "La password supera gli "+ MAX_PASSWORD +" caratteri massimi consentiti");
+        }
+        this.password = password;
+    }
 
 	@Override
 	public TipoDipendente getTipoDipendente() { return tipoDipendente; }

@@ -4,16 +4,16 @@ import java.time.LocalDate;
 
 public class DipendenteDB {
 
-		private String codiceFiscale;
-		private String nome;
-		private String cognome;
-		private LocalDate dataNascita;
-		private String email;
-		private String numeroTelefonico;
-		private String idDipendente;
-		private String password;
-		private String ruolo;
-		private LocalDate dataInizio;
+		private final String codiceFiscale;
+		private final String nome;
+		private final  String cognome;
+		private final LocalDate dataNascita;
+		private final String email;
+		private final String numeroTelefonico;
+		private final String idDipendente;
+		private final String password;
+		private final String ruolo;
+		private final LocalDate dataInizio;
 		
 		public DipendenteDB(	String codiceFiscale, 
 							String nome, 

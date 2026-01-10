@@ -1,9 +1,6 @@
 package it.unipv.posw.careconnectpro.jdbc.bean.dipendente;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +10,8 @@ public class DipendenteDAO implements IDipendenteDAO {
 
 	private Connection conn;
 	
-	public DipendenteDAO()	{
+	public DipendenteDAO(Connection conn)	{
+        this.conn = conn;
 	}
 	
 	@Override
@@ -43,7 +41,11 @@ public class DipendenteDAO implements IDipendenteDAO {
 	        ps1.executeUpdate();
 	        return true;
 		}
-		catch(Exception e){
+		catch(SQLException e){
+            if ("22001".equals(e.getSQLState())) {
+                System.err.println("Errore JDBC: La password (o un altro campo) è troppo lunga per il database.");
+            }
+
 			e.printStackTrace();
 			check = false;
 		}

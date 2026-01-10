@@ -6,8 +6,8 @@ import it.unipv.posw.careconnectpro.model.persona.dipendente.TipoDipendente;
 
 public class ProxyRSA implements IResidenzaSanitariaAssistenziale {
 
-    private ResidenzaSanitariaAssistenziale rsa;
-    private Dipendente utenteLoggato;
+    private final ResidenzaSanitariaAssistenziale rsa;
+    private final Dipendente utenteLoggato;
 
     public ProxyRSA(Dipendente amministratore) {
         this.utenteLoggato = amministratore;
