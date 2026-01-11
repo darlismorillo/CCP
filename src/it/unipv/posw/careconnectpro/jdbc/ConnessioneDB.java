@@ -7,43 +7,78 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnessioneDB {
-    private static ConnessioneDB instance;
-    private Connection connection;
-    private String username;
-    private String password;
-    private String dbDriver;
-    private String dbURL;
+	
+	private static final String PROPERTYDBDRIVER = "DBDRIVER";
+	private static final String PROPERTYDBURL = "DBURL";
+	private static final String PROPERTYNAME = "DBUSER"; 
+	private static final String PROPERTYPSW = "DBPSW"; 
+	
+	private static String username;
+	private static String password;
+	private static String dbDriver;
+	private static String dbURL;
+	
+	private static void init() {
+		Properties p = new Properties(System.getProperties());
+			try {
+				p.load(new FileInputStream("properties/properties"));
+				username = p.getProperty(PROPERTYNAME);
+				password = p.getProperty(PROPERTYPSW);
+				dbDriver = p.getProperty(PROPERTYDBDRIVER);
+				dbURL = p.getProperty(PROPERTYDBURL);
+			
+			}catch(Exception e) {
+				e.printStackTrace();
+		}
+	}
+	
+	public static boolean isOpen(Connection conn)	{
+		try {
+			if (conn != null && !conn.isClosed()) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+	
+	public static Connection closeConnection(Connection conn)		{
+		if ( !isOpen(conn) )
+			return null;
+		try	{
+			conn.close();
+			conn = null;
+		} 
+		catch (SQLException e)	{
+			e.printStackTrace();
+			return null;
+		}
+		return conn;
+	}
+	
+	public static Connection startConnection(Connection conn, String schema) {
+		init();
+		System.out.println(dbURL);
+		
+		if ( isOpen(conn) )
+			closeConnection(conn);
 
-	private ConnessioneDB() {
-        Properties prop = new Properties();
+		try	{
+			dbURL=String.format(dbURL,schema); 
+			System.out.println(dbURL);
+			Class.forName(dbDriver);
+			
+			conn = DriverManager.getConnection(dbURL, username, password);	// Apertura connessione
+			conn.setAutoCommit(true);
+		}
+		catch (Exception e)	{
+			e.printStackTrace();
+			return null;
+		}
+		
+		return conn;
+	}
 
-        try{
-         prop.load(new FileInputStream("properties/properties"));
-         this.username = prop.getProperty("DBUSER");
-         this.password = prop.getProperty("DBPW");
-         this.dbDriver = prop.getProperty("DBDRIVER");
-         this.dbURL = prop.getProperty("DBURL");
-         Class.forName(dbDriver);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-    public static synchronized ConnessioneDB getInstance() {
-        if (instance == null) {
-            instance = new ConnessioneDB();
-        }
-        return instance;
-    }
-
-
-    public Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            // Utilizza lo schema di default o parametrizzato come in ConnessioneDB
-            connection = DriverManager.getConnection(dbURL, username, password);
-            connection.setAutoCommit(true);
-        }
-        return connection;
-    }
 }

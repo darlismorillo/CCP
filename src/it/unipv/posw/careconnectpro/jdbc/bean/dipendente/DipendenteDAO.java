@@ -1,6 +1,9 @@
 package it.unipv.posw.careconnectpro.jdbc.bean.dipendente;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,17 +13,17 @@ public class DipendenteDAO implements IDipendenteDAO {
 
 	private Connection conn;
 	
-	public DipendenteDAO(Connection conn)	{
-        this.conn = conn;
+	public DipendenteDAO()	{
 	}
 	
 	@Override
 	public boolean insertDipendente(DipendenteDB d) {
+		conn = ConnessioneDB.startConnection(conn, "ccp");
 		PreparedStatement ps1;
 		boolean check = true;
 
 	    String query = "INSERT INTO ccp.DIPENDENTI " +
-                "(CODICE_FISCALE, NOME, COGNOME, DATA_DI_NASCITA, EMAIL, NUMERO_TELEFONICO, ID_DIPENDENTE, PASSWORD, RUOLO, DATA_INIZIO) " +
+                "(CODICE_FISCALE, NOME, COGNOME, DATA_DI_NASCITA, EMAIL, NUMERO_TELEFONICO, ID_DIPENDENTE, DIPENDENTE_PASSWORD, RUOLO, DATA_INIZIO) " +
                 "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
 		try {
@@ -40,18 +43,17 @@ public class DipendenteDAO implements IDipendenteDAO {
 	        ps1.executeUpdate();
 	        return true;
 		}
-		catch(SQLException e){
-            if ("22001".equals(e.getSQLState())) {
-                System.err.println("Errore JDBC: La password (o un altro campo) è troppo lunga per il database.");
-            }
-
+		catch(Exception e){
 			e.printStackTrace();
 			check = false;
-            return check;
 		}
+
+		ConnessioneDB.closeConnection(conn);
+		return check;
 	}
 	
 	public List<DipendenteDB> selectAllDipendenti() {
+		conn = ConnessioneDB.startConnection(conn, "ccp");
 		List<DipendenteDB> lista = new ArrayList<>();
         PreparedStatement ps1;
         ResultSet rs1;
@@ -81,12 +83,14 @@ public class DipendenteDAO implements IDipendenteDAO {
 			e.printStackTrace();
 		}
 
+		ConnessioneDB.closeConnection(conn);
 		return lista;
 	}
 	
 	@Override
     public DipendenteDB selectDipendenteByCf (String cf) {
 		DipendenteDB d = null;
+        conn = ConnessioneDB.startConnection(conn, "ccp");
         PreparedStatement ps1;
         ResultSet rs1;
         
@@ -117,14 +121,15 @@ public class DipendenteDAO implements IDipendenteDAO {
             e.printStackTrace();
             return null;
         } 
-
+        
+		ConnessioneDB.closeConnection(conn);
 		return d;
     }
 	
 	@Override
     public DipendenteDB selectDipendenteByCfAndPw (String cf, String pw) {
 		DipendenteDB d = null;
-
+        conn = ConnessioneDB.startConnection(conn, "ccp");
         PreparedStatement ps1;
         ResultSet rs1;
         
@@ -155,7 +160,8 @@ public class DipendenteDAO implements IDipendenteDAO {
             e.printStackTrace();
             return null;
         } 
-
+        
+		ConnessioneDB.closeConnection(conn);
 		return d;
     }
 }

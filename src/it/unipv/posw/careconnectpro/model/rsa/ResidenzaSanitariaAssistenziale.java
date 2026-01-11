@@ -13,15 +13,11 @@ public class ResidenzaSanitariaAssistenziale implements IResidenzaSanitariaAssis
 
     @Override
     public boolean registrazioneDipendente(Dipendente d) {
-    if (d==null) {
-        return false;
-    }
         return facadeDB.insertDipendente(d);
     }
     
     @Override
     public Dipendente loginDipendente(String cf, String password) {
-
         return facadeDB.loginDipendente(cf, password);
     }
 }

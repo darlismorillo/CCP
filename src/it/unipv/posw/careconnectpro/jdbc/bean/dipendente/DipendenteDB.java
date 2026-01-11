@@ -1,21 +1,19 @@
 package it.unipv.posw.careconnectpro.jdbc.bean.dipendente;
 
-import it.unipv.posw.careconnectpro.model.persona.dipendente.TipoDipendente;
-
 import java.time.LocalDate;
 
 public class DipendenteDB {
 
-		private final String codiceFiscale;
-		private final String nome;
-		private final  String cognome;
-		private final LocalDate dataNascita;
-		private final String email;
-		private final String numeroTelefonico;
-		private final String idDipendente;
-		private final String password;
-		private final String ruolo;
-		private final LocalDate dataInizio;
+		private String codiceFiscale;
+		private String nome;
+		private String cognome;
+		private LocalDate dataNascita;
+		private String email;
+		private String numeroTelefonico;
+		private String idDipendente;
+		private String password;
+		private String ruolo;
+		private LocalDate dataInizio;
 		
 		public DipendenteDB(	String codiceFiscale, 
 							String nome, 
@@ -25,7 +23,7 @@ public class DipendenteDB {
 							String numeroTelefonico, 
 							String idDipendente, 
 							String password, 
-							String ruolo,
+							String ruolo, 
 							LocalDate dataInizio) {
 			this.codiceFiscale = codiceFiscale;
 			this.nome = nome;
