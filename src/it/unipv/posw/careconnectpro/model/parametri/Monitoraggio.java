@@ -8,26 +8,35 @@ import java.time.LocalDateTime;
 
 public class Monitoraggio {
 
-    private Paziente paziente;
-    private String note;
+    private  Paziente paziente;
+    private  String note;
     private final int id_monitoraggio;
-    private LocalDate data_registrazione;
-    private LocalDateTime ora_registrazione;
-    private ParametroVitale parametroVitale;
-    private Dipendente dipendente;
+    private  LocalDate data_registrazione;
+    private  LocalDateTime ora_registrazione;
+    private  ParametroVitale parametroVitale;
+    private  Dipendente dipendente;
 
-    public  Monitoraggio(int id_monitoraggio, Dipendente dipendente) {
+    public  Monitoraggio(int id_monitoraggio, Paziente paziente, Dipendente dipendente, ParametroVitale parametroVitale,
+                        String note) {
         this.id_monitoraggio = id_monitoraggio;
+        this.paziente = paziente;
+        this.dipendente = dipendente;
+        this.parametroVitale = parametroVitale;
         data_registrazione = LocalDate.now();
         ora_registrazione = LocalDateTime.now();
-        this.dipendente = dipendente;
+        this.note = note;
 
     }
 
-    public void addMonitoraggio(Paziente paziente, ParametroVitale parametroVitale, String note) {
-       this.paziente = paziente;
-       this.note = note;
-       this.parametroVitale = parametroVitale;
+    @Override
+    public String toString() {
+        return "Monitoraggio{" +
+                "paziente=" + paziente +
+                ", id_monitoraggio=" + id_monitoraggio +
+                ", data_registrazione=" + data_registrazione +
+                ", parametroVitale=" + parametroVitale +
+                ", dipendente=" + dipendente +
+                '}';
     }
 
     //Getter and Setter
