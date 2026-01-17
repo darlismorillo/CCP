@@ -1,4 +1,0 @@
-DBDRIVER=com.mysql.cj.jdbc.Driver
-DBURL=jdbc:mysql://127.0.0.1:3306/ccp
-DBUSER=CareConnectPro
-DBPSW=CareConnectProPassword
