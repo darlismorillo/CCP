@@ -8,37 +8,52 @@ import it.unipv.posw.careconnectpro.model.persona.dipendente.FactoryDipendente;
 
 public class FacadeSingletonDB {
 
-	private static FacadeSingletonDB istanzaDB;
+    private static FacadeSingletonDB istanzaDB;
 
-	private IDipendenteDAO dipendenteDAO;
-	
+    private IDipendenteDAO dipendenteDAO;
+
 
     private FacadeSingletonDB() {
         dipendenteDAO = new DipendenteDAO();
     }
 
+
     public static FacadeSingletonDB getIstanzaFacade() {
-		if(istanzaDB == null) {
-			istanzaDB = new FacadeSingletonDB();
-		}
-		return istanzaDB;
-	}
-    
-    public Dipendente loginDipendente(String cf, String password) {
-        DipendenteDB db = dipendenteDAO.selectDipendenteByCfAndPw(cf, password);
-        if (db == null) return null;
-        return FactoryDipendente.creaDipendente(db.getRuolo(),
-            db.getCodiceFiscale(),
-            db.getNome(),
-            db.getCognome(),
-            db.getDataNascita(),
-            db.getEmail(),
-            db.getNumeroTelefonico(),
-            db.getIdDipendente(),
-            db.getPassword(),
-            db.getDataInizio()
-        );
+        if(istanzaDB == null) {
+            istanzaDB = new FacadeSingletonDB();
+        }
+        return istanzaDB;
     }
+
+
+    public IDipendenteDAO getDipendenteDAO() {
+        return dipendenteDAO;
+    }
+
+
+    public void setDipendenteDAO(IDipendenteDAO dipendenteDAO) {
+        this.dipendenteDAO = dipendenteDAO;
+    }
+
+
+    public Dipendente findDipendenteByCf(String cf) {
+        DipendenteDB db = dipendenteDAO.selectDipendenteByCf(cf);
+        if (db == null) return null;
+        Dipendente dipendente = FactoryDipendente.getDipendente(
+                db.getRuolo(),
+                db.getCodiceFiscale(),
+                db.getNome(),
+                db.getCognome(),
+                db.getDataNascita(),
+                db.getEmail(),
+                db.getNumeroTelefonico(),
+                db.getIdDipendente(),
+                db.getPassword(),
+                db.getDataInizio()
+        );
+        return dipendente;
+    }
+
 
     public boolean insertDipendente(Dipendente d) {
         DipendenteDB db = new DipendenteDB(
@@ -53,6 +68,10 @@ public class FacadeSingletonDB {
                 d.getTipoDipendente().name(),
                 d.getDataAssunzione());
         return dipendenteDAO.insertDipendente(db);
+    }
+
+    public boolean deleteDipendente(String idDipendente) {
+        return dipendenteDAO.deleteDipendenteById(idDipendente);
     }
 
 }
