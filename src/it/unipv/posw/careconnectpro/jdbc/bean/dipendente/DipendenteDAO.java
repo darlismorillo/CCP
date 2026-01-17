@@ -11,9 +11,8 @@ import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
 
 public class DipendenteDAO implements IDipendenteDAO {
 
-    public DipendenteDAO	()	{
+    public DipendenteDAO() {
     }
-
 
     @Override
     public boolean insertDipendente(DipendenteDB d) {
@@ -43,14 +42,14 @@ public class DipendenteDAO implements IDipendenteDAO {
 
 
     @Override
-    public DipendenteDB selectDipendenteByCf (String cf) {
+    public DipendenteDB selectDipendenteByCf(String cf) {
         DipendenteDB d = null;
         String query = "SELECT * FROM ccp.DIPENDENTI WHERE CODICE_FISCALE = ?";
         try (Connection conn = ConnessioneDB.startConnection("ccp");
              PreparedStatement ps = conn.prepareStatement(query)
-        ){
+        ) {
             ps.setString(1, cf);
-            try(ResultSet rs = ps.executeQuery())	{
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     d = new DipendenteDB(
                             rs.getString("CODICE_FISCALE"),
@@ -74,6 +73,7 @@ public class DipendenteDAO implements IDipendenteDAO {
     }
 
 
+
     @Override
     public boolean deleteDipendenteById(String idDipendente) {
         String query = "DELETE FROM DIPENDENTI WHERE ID_DIPENDENTE = ?";
@@ -88,7 +88,7 @@ public class DipendenteDAO implements IDipendenteDAO {
         }
     }
 
-
+}
 //	public List<DipendenteDB> selectAllDipendenti() {
 //	List<DipendenteDB> lista = new ArrayList<>();
 //	String query = "SELECT * FROM ccp.DIPENDENTI";
@@ -115,4 +115,3 @@ public class DipendenteDAO implements IDipendenteDAO {
 //	}
 //	return lista;
 //}
-}

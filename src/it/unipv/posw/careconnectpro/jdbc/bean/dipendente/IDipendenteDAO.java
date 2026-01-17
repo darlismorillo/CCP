@@ -6,7 +6,7 @@ public interface IDipendenteDAO {
 
     boolean insertDipendente(DipendenteDB d);
     DipendenteDB selectDipendenteByCf(String cf);
-    //List<DipendenteDB> selectAllDipendenti();
-	DipendenteDB deleteDipendneteById(String cf, String pw);
+    //List<DipendenteDB> selectAllDipendenti();;
 
+    boolean deleteDipendenteById(String idDipendente);
 }
