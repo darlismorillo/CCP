@@ -2,7 +2,6 @@ package it.unipv.posw.careconnectpro.jdbc.bean;
 
 import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
 import it.unipv.posw.careconnectpro.model.parametri.Monitoraggio;
-import it.unipv.posw.careconnectpro.model.parametri.ParametroVitale;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 
 import java.sql.Connection;
@@ -18,7 +17,7 @@ public class DiarioParametriDAO {
     }
 
     public boolean insertParamentri(Paziente paziente, Monitoraggio monitoraggio) throws SQLException {
-        conn = ConnessioneDB.startConnection(conn,"cpp");
+        conn = ConnessioneDB.startConnection("cpp");
         PreparedStatement ps;
         boolean check = true;
 

@@ -1,6 +1,6 @@
 package it.unipv.posw.careconnectpro.jdbc.bean.dipendente;
 
-import java.util.List;
+//import java.util.List;
 
 public interface IDipendenteDAO {
 
