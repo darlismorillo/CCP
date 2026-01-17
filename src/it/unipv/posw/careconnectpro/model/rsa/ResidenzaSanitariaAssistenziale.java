@@ -5,7 +5,7 @@ import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 
 public class ResidenzaSanitariaAssistenziale implements IResidenzaSanitariaAssistenziale {
 
-    private FacadeSingletonDB facadeDB;
+    private final FacadeSingletonDB facadeDB;
 
     public ResidenzaSanitariaAssistenziale() {
         facadeDB = FacadeSingletonDB.getIstanzaFacade();
@@ -15,9 +15,10 @@ public class ResidenzaSanitariaAssistenziale implements IResidenzaSanitariaAssis
     public boolean registrazioneDipendente(Dipendente d) {
         return facadeDB.insertDipendente(d);
     }
-    
-    @Override
-    public Dipendente loginDipendente(String cf, String password) {
-        return facadeDB.loginDipendente(cf, password);
+
+    public boolean rimuoviDipendente(String idDipendente) {
+        return facadeDB.deleteDipendente(idDipendente);
+        //return false;
     }
-}
+    }
+
