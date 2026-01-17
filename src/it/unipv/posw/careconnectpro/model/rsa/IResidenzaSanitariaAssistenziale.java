@@ -4,7 +4,7 @@ import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 
 public interface IResidenzaSanitariaAssistenziale {
 
-	boolean registrazioneDipendente(Dipendente d);
+    boolean registrazioneDipendente(Dipendente d);
     boolean rimuoviDipendente(String idDipendente);
 
 }

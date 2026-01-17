@@ -24,7 +24,10 @@ public class ProxyRSA implements IResidenzaSanitariaAssistenziale {
     }
 
     @Override
-    public Dipendente loginDipendente(String cf, String password) {
-        return rsa.loginDipendente(cf, password);
+    public boolean rimuoviDipendente(String idDipendente)	{
+        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == TipoDipendente.AMMINISTRATORE) {
+            return rsa.rimuoviDipendente(idDipendente);
+        }
+        throw new RuntimeException("Solo gli amministratori possono rimuovere i dipendenti");
     }
 }
