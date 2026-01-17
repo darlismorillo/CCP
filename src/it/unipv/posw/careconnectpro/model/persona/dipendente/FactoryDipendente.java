@@ -1,19 +1,52 @@
 package it.unipv.posw.careconnectpro.model.persona.dipendente;
 
+import java.io.FileInputStream;
+import java.lang.reflect.Constructor;
 import java.time.LocalDate;
+import java.util.Properties;
 
 public class FactoryDipendente {
 
-    public static Dipendente creaDipendente(String tipoStr, String cf, String nome, String cognome,
-                                            LocalDate nascita, String email, String cell,
-                                            String id, String pw, LocalDate assunzione) {
+    public static final String FILE_PROPERTIES_DIPENDENTI = "properties/dipendenti.properties";
 
-        TipoDipendente tipo = TipoDipendente.valueOf(tipoStr.toUpperCase());
+    public static Dipendente getDipendente(
+            String tipo,
+            String cf,
+            String nome,
+            String cognome,
+            LocalDate nascita,
+            String email,
+            String cell,
+            String id,
+            String pw,
+            LocalDate assunzione) {
 
-        return switch (tipo) {
-            case MEDICO -> new Medico(cf, nome, cognome, nascita, email, cell, id, pw, assunzione);
-            case INFERMIERE -> new Infermiere(cf, nome, cognome, nascita, email, cell, id, pw, assunzione);
-            case AMMINISTRATORE -> new Amministratore(cf, nome, cognome, nascita, email, cell, id, pw, assunzione);
-        };
+        String dipendenteClassName;
+
+        try {
+            Properties p = new Properties(System.getProperties());
+            p.load(new FileInputStream(FILE_PROPERTIES_DIPENDENTI));
+            dipendenteClassName = p.getProperty(tipo.toUpperCase());
+
+            Constructor <?> c = Class.forName(dipendenteClassName).getConstructor(
+                    String.class,
+                    String.class,
+                    String.class,
+                    LocalDate.class,
+                    String.class,
+                    String.class,
+                    String.class,
+                    String.class,
+                    LocalDate.class
+            );
+
+            Dipendente dipendente = (Dipendente) c.newInstance(cf, nome, cognome, nascita, email, cell, id, pw, assunzione);
+            return dipendente;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

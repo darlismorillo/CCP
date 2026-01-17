@@ -57,7 +57,6 @@ public class ConnessioneDB {
     }
 
 
-
     public static void closeConnection(Connection conn) {
         try {
             if (conn != null && !conn.isClosed())
