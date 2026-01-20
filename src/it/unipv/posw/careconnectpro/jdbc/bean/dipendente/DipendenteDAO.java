@@ -1,9 +1,6 @@
 package it.unipv.posw.careconnectpro.jdbc.bean.dipendente;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 //import java.util.ArrayList;
 //import java.util.List;
 
@@ -18,26 +15,41 @@ public class DipendenteDAO implements IDipendenteDAO {
     public boolean insertDipendente(DipendenteDB d) {
         String query =
                 "INSERT INTO DIPENDENTI " +
-                        "(CODICE_FISCALE, NOME, COGNOME, DATA_DI_NASCITA, EMAIL, NUMERO_TELEFONICO, ID_DIPENDENTE, DIPENDENTE_PASSWORD, RUOLO, DATA_INIZIO) " +
-                        "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                        "(CODICE_FISCALE, NOME, COGNOME, DATA_DI_NASCITA, EMAIL, NUMERO_TELEFONICO, DIPENDENTE_PASSWORD, RUOLO, DATA_INIZIO) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?)";
         try (Connection conn = ConnessioneDB.startConnection("ccp");
-             PreparedStatement ps = conn.prepareStatement(query)) {
+             PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, d.getCodiceFiscale());
             ps.setString(2, d.getNome());
             ps.setString(3, d.getCognome());
             ps.setDate(4, Date.valueOf(d.getDataNascita()));
             ps.setString(5, d.getEmail());
             ps.setString(6, d.getNumeroTelefonico());
-            ps.setString(7, d.getIdDipendente());
-            ps.setString(8, d.getPassword());
-            ps.setString(9, d.getRuolo());
-            ps.setDate(10, Date.valueOf(d.getDataInizio()));
+            ps.setString(7, d.getPassword());
+            ps.setString(8, d.getRuolo());
+            ps.setDate(9, Date.valueOf(d.getDataInizio()));
             ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                int id = rs.getInt(1);
+                String id_dipendente = "DIP" + id;
+
+                String query2 = "UPDATE DIPENDENTI SET ID_DIPENDENTE = ? WHERE ID = ?";
+
+                PreparedStatement ps2 = conn.prepareStatement(query2);
+                ps2.setString(1, id_dipendente);
+                ps2.setInt(2, id);
+                ps2.executeUpdate();
+
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+
+
     }
 
 
@@ -58,7 +70,6 @@ public class DipendenteDAO implements IDipendenteDAO {
                             rs.getDate("DATA_DI_NASCITA").toLocalDate(),
                             rs.getString("EMAIL"),
                             rs.getString("NUMERO_TELEFONICO"),
-                            rs.getString("ID_DIPENDENTE"),
                             rs.getString("DIPENDENTE_PASSWORD"),
                             rs.getString("RUOLO"),
                             rs.getDate("DATA_INIZIO").toLocalDate()

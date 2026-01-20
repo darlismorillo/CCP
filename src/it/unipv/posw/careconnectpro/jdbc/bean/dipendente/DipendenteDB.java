@@ -20,8 +20,7 @@ public class DipendenteDB {
 							String cognome, 
 							LocalDate dataNascita, 
 							String email,
-							String numeroTelefonico, 
-							String idDipendente, 
+							String numeroTelefonico,
 							String password, 
 							String ruolo, 
 							LocalDate dataInizio) {

@@ -15,10 +15,9 @@ public class ResidenzaSanitariaAssistenziale implements IResidenzaSanitariaAssis
     public boolean registrazioneDipendente(Dipendente d) {
         return facadeDB.insertDipendente(d);
     }
-
     public boolean rimuoviDipendente(String idDipendente) {
         return facadeDB.deleteDipendente(idDipendente);
-        //return false;
     }
+
     }
 

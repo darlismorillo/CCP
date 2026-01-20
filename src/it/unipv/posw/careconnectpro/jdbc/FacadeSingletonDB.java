@@ -29,8 +29,6 @@ public class FacadeSingletonDB {
     public IDipendenteDAO getDipendenteDAO() {
         return dipendenteDAO;
     }
-
-
     public void setDipendenteDAO(IDipendenteDAO dipendenteDAO) {
         this.dipendenteDAO = dipendenteDAO;
     }
@@ -47,7 +45,7 @@ public class FacadeSingletonDB {
                 db.getDataNascita(),
                 db.getEmail(),
                 db.getNumeroTelefonico(),
-                db.getIdDipendente(),
+                //db.getIdDipendente(),
                 db.getPassword(),
                 db.getDataInizio()
         );
@@ -63,10 +61,9 @@ public class FacadeSingletonDB {
                 d.getDataNascita(),
                 d.getEmail(),
                 d.getCellulare(),
-                d.getIdDipendente(),
                 d.getPassword(),
-                d.getTipoDipendente().name(),
-                d.getDataAssunzione());
+                d.getTipoUtente().name(),
+                d.getDataInizio());
         return dipendenteDAO.insertDipendente(db);
     }
 

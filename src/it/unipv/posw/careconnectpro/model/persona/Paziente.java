@@ -1,22 +1,18 @@
 package it.unipv.posw.careconnectpro.model.persona;
 
-import it.unipv.posw.careconnectpro.model.parametri.diaro.DiarioClinico;
+import it.unipv.posw.careconnectpro.model.parametri.diaro.DiarioParamentri;
 
 import java.time.LocalDate;
 
 public class Paziente extends Persona {
 
-    //	private PianoTerapeutico pianoPersonale;
-    private final DiarioClinico diarioClinico;
-
     public Paziente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,
-                    String cellulare, DiarioClinico diarioClinico ) {
-        super(codiceFiscale, nome, cognome, dataNascita, email, cellulare);
-        this.diarioClinico = diarioClinico;
+                    String cellulare, String id, String password, LocalDate dataAssunzione) {
+        super(codiceFiscale, nome, cognome, dataNascita, email, cellulare,
+                id, password, TipoUtente.PAZIENTE, dataAssunzione);
+
     }
 
-    public DiarioClinico getDiarioClinico() {
-        return diarioClinico;
-    }
+
 
 }

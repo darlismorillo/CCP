@@ -1,10 +1,9 @@
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
-import it.unipv.posw.careconnectpro.model.persona.dipendente.TipoDipendente;
+import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 import it.unipv.posw.careconnectpro.model.rsa.ProxyRSA;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class ProxyTest {
@@ -14,17 +13,17 @@ public class ProxyTest {
     public void creaDipendenti(){
         amministratore = new Dipendente("RSSMRA80A01F205Z", "Mario", "Rossi",
                 LocalDate.of(1980, 1, 1), "admin@test.it", "333111",
-                "ADM01", "pass123", TipoDipendente.AMMINISTRATORE, LocalDate.now());
+                "pass123", TipoUtente.AMMINISTRATORE, LocalDate.now());
 
         medico = new Dipendente("BNCGNN90A01F205X", "Gianni", "Bianchi",
                 LocalDate.of(1990, 5, 20), "medico@test.it", "333222",
-                "MED01", "pass123", TipoDipendente.MEDICO, LocalDate.now());
+                 "pass123", TipoUtente.MEDICO, LocalDate.now());
 
 
         dipendenteNuovo = new Dipendente("VRDLUU00A01F205W", "Luca", "Verdi",
-                LocalDate.of(2000, 10, 10), "luca@test.it", "333333",
-                "INF01", "pass123", TipoDipendente.INFERMIERE, LocalDate.now());
+                LocalDate.of(2000, 10, 10), "luca@test.it", "333333", "pass123", TipoUtente.INFERMIERE, LocalDate.now());
     }
+
 
 //    @Test
 //    public void connessione(){
