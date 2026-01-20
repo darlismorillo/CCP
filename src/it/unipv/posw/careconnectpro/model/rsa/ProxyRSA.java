@@ -16,7 +16,7 @@ public class ProxyRSA implements IResidenzaSanitariaAssistenziale {
 
     @Override
     public boolean registrazioneDipendente(Dipendente dipendente) {
-        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == TipoUtente.AMMINISTRATORE) {
+        if(utenteLoggato != null  && utenteLoggato.getTipoUtente() == TipoUtente.AMMINISTRATORE) {
             return rsa.registrazioneDipendente(dipendente);
         }
         System.out.println("Solo gli amministratori possono registrare nuovi dipendenti");
@@ -25,7 +25,7 @@ public class ProxyRSA implements IResidenzaSanitariaAssistenziale {
 
     @Override
     public boolean rimuoviDipendente(String idDipendente)	{
-        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == TipoUtente.AMMINISTRATORE) {
+        if(utenteLoggato != null  && utenteLoggato.getTipoUtente() == TipoUtente.AMMINISTRATORE) {
             return rsa.rimuoviDipendente(idDipendente);
         }
         throw new RuntimeException("Solo gli amministratori possono rimuovere i dipendenti");

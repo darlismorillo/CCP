@@ -14,7 +14,7 @@ public class Dipendente extends Persona implements IDipendente {
     private static final int MAX_PASSWORD = 8;
 	
 	public Dipendente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,
-                      String cellulare, String idDipendente,String password, TipoUtente tipoUtente, LocalDate dataAssunzione) {
+                      String cellulare, String idDipendente, String password, TipoUtente tipoUtente, LocalDate dataAssunzione) {
 		super(codiceFiscale, nome, cognome, dataNascita, email, cellulare, idDipendente, password, tipoUtente, dataAssunzione);
         setIdDipendente(idDipendente);
 		//this.setPassword(password);
