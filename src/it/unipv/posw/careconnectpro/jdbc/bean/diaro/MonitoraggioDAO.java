@@ -23,7 +23,7 @@ public class MonitoraggioDAO {
             ps.setString(1, monitoraggio.getIdMonitoraggio());
             ps.setString(2, monitoraggio.getPaziente().getDiarioParamentri().getIdDiario());
             ps.setDate(3, Date.valueOf(monitoraggio.getDataRegistrazione()));
-            ps.setString(4, monitoraggio.getDipendente().getIdDipendente());
+            ps.setString(4, monitoraggio.getDipendente().getCodiceFiscale());
             ps.setString(5, monitoraggio.getPaziente().getCodiceFiscale());
             ps.setString(6, monitoraggio.getStringParametroVitale());
             ps.setString(7, monitoraggio.getParametroVitale().getStato());
