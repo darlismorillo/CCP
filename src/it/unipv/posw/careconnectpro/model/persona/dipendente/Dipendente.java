@@ -7,25 +7,18 @@ import java.time.LocalDate;
 
 public class Dipendente extends Persona implements IDipendente {
 
-	private static final String ID = "DIP" ;
     private String password, idDipendente;
 	private TipoUtente tipoUtente;
 	private LocalDate dataAssunzione;
     private static final int MAX_PASSWORD = 8;
 	
 	public Dipendente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,
-                      String cellulare, String idDipendente, String password, TipoUtente tipoUtente, LocalDate dataAssunzione) {
-		super(codiceFiscale, nome, cognome, dataNascita, email, cellulare, idDipendente, password, tipoUtente, dataAssunzione);
-        setIdDipendente(idDipendente);
-		//this.setPassword(password);
-		//this.dataAssunzione = dataAssunzione;
+                      String cellulare, String password, TipoUtente tipoUtente, LocalDate dataAssunzione) {
+		super(codiceFiscale, nome, cognome, dataNascita, email, cellulare, password, tipoUtente, dataAssunzione);
+
 	}
 
 
-	public String getIdDipendente() { return idDipendente; }
-    public void setIdDipendente(String idDipendente) {
-        this.idDipendente = ID;
-    }
 
 	public String getPassword() { return password; }
 	public void setPassword(String password) { if (password != null && password.length() > MAX_PASSWORD) {

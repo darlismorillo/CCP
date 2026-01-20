@@ -1,10 +1,6 @@
 package it.unipv.posw.careconnectpro.jdbc;
 
-import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.DipendenteDB;
-import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.PersonaDAO;
 import it.unipv.posw.careconnectpro.model.persona.Persona;
-import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
-import it.unipv.posw.careconnectpro.model.persona.dipendente.FactoryDipendente;
 
 public class FacedeSingletonDB2 {
 
