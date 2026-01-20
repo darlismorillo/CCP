@@ -8,6 +8,6 @@ public class DipendenteTest {
     @Test
     public void testPassword() {
         new Dipendente("CodiceFi", "nome", "cognome", LocalDate.now(), "nomecognome@",
-                "12345678", "", "passwordtest", TipoUtente.MEDICO, LocalDate.now());
+                "12345678",  "passwordtest", TipoUtente.MEDICO, LocalDate.now());
     }
 }

@@ -19,8 +19,10 @@ public class Dipendente extends Persona implements IDipendente {
 	}
 
 
-
-	public String getPassword() { return password; }
+    public String getIdDipendente() {
+        return idDipendente;
+    }
+    public String getPassword() { return password; }
 	public void setPassword(String password) { if (password != null && password.length() > MAX_PASSWORD) {
         throw new IllegalArgumentException( "La password supera gli "+ MAX_PASSWORD +" caratteri massimi consentiti");
     }
