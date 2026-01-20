@@ -9,7 +9,7 @@ public class Paziente extends Persona {
     private DiarioParamentri diarioParamentri;
     public Paziente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,
                     String cellulare, String id, String password, LocalDate dataAssunzione) {
-        super(codiceFiscale, nome, cognome, dataNascita, email, cellulare, password, TipoUtente.PAZIENTE, dataAssunzione);
+        super(codiceFiscale, nome, cognome, dataNascita, email, cellulare, null, TipoUtente.PAZIENTE, dataAssunzione);
 
         diarioParamentri = new DiarioParamentri();
 

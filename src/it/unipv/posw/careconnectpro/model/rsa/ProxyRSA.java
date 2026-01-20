@@ -4,14 +4,14 @@ package it.unipv.posw.careconnectpro.model.rsa;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 
-public class ProxyRSA implements IResidenzaSanitariaAssistenziale {
+public class ProxyRSA implements IRSA {
 
-    private final ResidenzaSanitariaAssistenziale rsa;
+    private final RSAService rsa;
     private final Dipendente utenteLoggato;
 
-    public ProxyRSA(Dipendente amministratore) {
-        this.utenteLoggato = amministratore;
-        this.rsa = new ResidenzaSanitariaAssistenziale();
+    public ProxyRSA(Dipendente utenteLoggato) {
+        this.utenteLoggato = utenteLoggato;
+        this.rsa = new RSAService();
     }
 
     @Override

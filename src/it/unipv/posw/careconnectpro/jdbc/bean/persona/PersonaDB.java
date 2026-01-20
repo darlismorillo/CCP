@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.jdbc;
+package it.unipv.posw.careconnectpro.jdbc.bean.persona;
 
 import java.time.LocalDate;
 
@@ -9,7 +9,6 @@ public class PersonaDB {
     private LocalDate dataNascita;
     private String email;
     private String numeroTelefonico;
-    private String idDipendente;
     private String password;
     private String ruolo;
     private LocalDate dataInizio;
@@ -22,7 +21,6 @@ public class PersonaDB {
         this.dataNascita = dataNascita;
         this.email = email;
         this.numeroTelefonico = numeroTelefonico;
-        //this.idDipendente = idDipendente;
         this.password = password;
         this.ruolo = ruolo;
         this.dataInizio = dataInizio;
@@ -46,9 +44,6 @@ public class PersonaDB {
     public String getNumeroTelefonico() {
         return numeroTelefonico;
     }
-    //public String getIdDipendente() {
-        //return idDipendente;
-    //}
     public String getPassword() {
         return password;
     }

@@ -23,7 +23,7 @@ public abstract class Persona {
 		this.dataNascita = dataNascita;
 		this.email = email;
 		this.cellulare = cellulare;
-        this.setPassword(password);
+        this.password = password;
         this.tipoUtente = tipoUtente;
         this.dataInizio = dataInizio;
 	}
@@ -41,11 +41,7 @@ public abstract class Persona {
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
-        if (password != null && password.length() > MAX_PASSWORD) {
-            throw new IllegalArgumentException( "La password supera gli "+ MAX_PASSWORD +" caratteri massimi consentiti");
-        }
-    }
+    public void setPassword(String password) { this.password = password; }
     public TipoUtente getTipoUtente() {
         return tipoUtente;
     }

@@ -7,9 +7,8 @@ import java.time.LocalDate;
 public class Infermiere extends Dipendente {
 
 	public Infermiere(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,
-			String cellulare, String idDipendente,String password, LocalDate dataAssunzione) {
-		super(codiceFiscale, nome, cognome, dataNascita, email, cellulare, password,
-                TipoUtente.INFERMIERE, dataAssunzione);
+			String cellulare,String password, LocalDate dataAssunzione) {
+		super(codiceFiscale, nome, cognome, dataNascita, email, cellulare, password, TipoUtente.INFERMIERE, dataAssunzione);
 	}
 
 }

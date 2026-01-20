@@ -1,41 +1,47 @@
 package it.unipv.posw.careconnectpro.jdbc;
 
-import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.DipendenteDAO;
-import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.DipendenteDB;
-import it.unipv.posw.careconnectpro.jdbc.bean.dipendente.IDipendenteDAO;
+import it.unipv.posw.careconnectpro.jdbc.bean.persona.IPersonaDAO;
+import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDAO;
+import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB;
+import it.unipv.posw.careconnectpro.model.persona.Persona;
+import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.FactoryDipendente;
 
 public class FacadeSingletonDB {
 
-    private static FacadeSingletonDB istanzaDB;
+    private static FacadeSingletonDB istanza;
+    private IPersonaDAO personaDAO;
 
-    private IDipendenteDAO dipendenteDAO;
-
-
-    private FacadeSingletonDB() {
-        dipendenteDAO = new DipendenteDAO();
+    public FacadeSingletonDB() {
+        personaDAO = new PersonaDAO();
     }
 
-
-    public static FacadeSingletonDB getIstanzaFacade() {
-        if(istanzaDB == null) {
-            istanzaDB = new FacadeSingletonDB();
+    public static FacadeSingletonDB getIstanza() {
+        if (istanza == null) {
+            istanza = new FacadeSingletonDB();
         }
-        return istanzaDB;
+        return istanza;
     }
 
+    public boolean insertPersona(Persona p) {
+        PersonaDB personaDB;
+        personaDB = new PersonaDB(
+                p.getCodiceFiscale(),
+                p.getNome(),
+                p.getCognome(),
+                p.getDataNascita(),
+                p.getEmail(),
+                p.getCellulare(),
+                p.getPassword(),
+                p.getTipoUtente().name(),
+                p.getDataInizio());
 
-    public IDipendenteDAO getDipendenteDAO() {
-        return dipendenteDAO;
+        return personaDAO.insertPersona(personaDB);
     }
-    public void setDipendenteDAO(IDipendenteDAO dipendenteDAO) {
-        this.dipendenteDAO = dipendenteDAO;
-    }
-
 
     public Dipendente findDipendenteByCf(String cf) {
-        DipendenteDB db = dipendenteDAO.selectDipendenteByCf(cf);
+        PersonaDB db = personaDAO.selectPersonaByCf(cf);
         if (db == null) return null;
         Dipendente dipendente = FactoryDipendente.getDipendente(
                 db.getRuolo(),
@@ -45,30 +51,23 @@ public class FacadeSingletonDB {
                 db.getDataNascita(),
                 db.getEmail(),
                 db.getNumeroTelefonico(),
-                //db.getIdDipendente(),
                 db.getPassword(),
                 db.getDataInizio()
         );
         return dipendente;
     }
 
-
-    public boolean insertDipendente(Dipendente d) {
-        DipendenteDB db = new DipendenteDB(
-                d.getCodiceFiscale(),
-                d.getNome(),
-                d.getCognome(),
-                d.getDataNascita(),
-                d.getEmail(),
-                d.getCellulare(),
-                d.getPassword(),
-                d.getTipoUtente().name(),
-                d.getDataInizio());
-        return dipendenteDAO.insertDipendente(db);
+    public boolean deletePersona(String cf) {
+        return personaDAO.deletePersonaByCf(cf);
     }
 
-    public boolean deleteDipendente(String idDipendente) {
-        return dipendenteDAO.deleteDipendenteById(idDipendente);
+
+    //Getter and Setter
+    public IPersonaDAO getPersonaDAO() {
+        return personaDAO;
+    }
+    public void setPersonaDAO(PersonaDAO personaDAO) {
+        this.personaDAO = personaDAO;
     }
 
 }
