@@ -1,6 +1,5 @@
-package it.unipv.posw.careconnectpro.model.parametri.cartella;
+package it.unipv.posw.careconnectpro.model.cartellaclinica.cartella;
 
-import it.unipv.posw.careconnectpro.model.parametri.ParametroVitale;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 

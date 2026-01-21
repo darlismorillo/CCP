@@ -30,4 +30,15 @@ public class ProxyRSA implements IRSA {
         }
         throw new RuntimeException("Solo gli amministratori possono rimuovere i dipendenti");
     }
+
+    /*
+    Getter and Setter
+     */
+
+    public Dipendente getUtenteLoggato() {
+        return utenteLoggato;
+    }
+    public RSAService getRsa() {
+        return rsa;
+    }
 }

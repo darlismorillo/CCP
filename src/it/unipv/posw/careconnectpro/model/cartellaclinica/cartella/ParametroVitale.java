@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.model.parametri;
+package it.unipv.posw.careconnectpro.model.cartellaclinica.cartella;
 
 public class ParametroVitale {
     private TipiParametroVitale parametroVitale;

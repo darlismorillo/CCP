@@ -1,6 +1,6 @@
 package it.unipv.posw.careconnectpro.model.persona;
 
-import it.unipv.posw.careconnectpro.model.parametri.cartella.CartellaClinica;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.CartellaClinica;
 
 import java.time.LocalDate;
 
