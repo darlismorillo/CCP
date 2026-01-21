@@ -1,6 +1,6 @@
 package it.unipv.posw.careconnectpro.model.cartellaclinica;
 
-import it.unipv.posw.careconnectpro.model.cartellaclinica.cartella.Monitoraggio;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Monitoraggio;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 
 import java.time.LocalDate;
@@ -11,7 +11,6 @@ public class CartellaClinica {
     private String idCartellaClinica, idPaziente;
     private List<Monitoraggio> monitoraggi;
     private LocalDate dataCreazione;
-    private Paziente p;
 
     public CartellaClinica(Paziente p) {
         this.idCartellaClinica = idCartellaClinica ;

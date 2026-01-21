@@ -1,28 +1,31 @@
-package it.unipv.posw.careconnectpro.model.cartellaclinica.cartella;
+package it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio;
 
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
+import it.unipv.posw.careconnectpro.model.persona.dipendente.Infermiere;
 
 import java.time.LocalDate;
 
 public class Monitoraggio {
 
-//    private String cfPaziente;
-//    private String idDipendente;
+//  private String cfPaziente;
+//  private String idDipendente;
     private String note;
-    private final String idMonitoraggio;
+    private String idMonitoraggio , idCartellaClinica;
+    private String cfPaziente, idInfermiere;
     private final LocalDate dataRegistrazione;
     private ParametroVitale parametroVitale;
     private Alert alert;
     private Paziente paziente;
     private Dipendente dipendente;
 
-    public  Monitoraggio(String idMonitoraggio, Paziente paziente , Dipendente dipendente, ParametroVitale parametroVitale,
-                         Alert alert, String note) {
+    public  Monitoraggio(String idCartellaClinica, Paziente paziente , Infermiere infermiere,
+                         ParametroVitale parametroVitale, Alert alert, String note) {
 
         this.idMonitoraggio = idMonitoraggio;
-        this.paziente = paziente;
-        this.dipendente = dipendente;
+        this.idCartellaClinica = idCartellaClinica;
+        this.cfPaziente = paziente.getCodiceFiscale();
+        this.idInfermiere = infermiere.getCodiceFiscale();
         this.parametroVitale = parametroVitale;
         dataRegistrazione = LocalDate.now();
         this.alert = alert;
@@ -37,18 +40,15 @@ public class Monitoraggio {
     public void setParametroVitale(ParametroVitale parametroVitale) {
         this.parametroVitale = parametroVitale;
     }
-//    public String getCfPaziente() {
-//        return cfPaziente;
-//    }
-//    public void setCfPaziente(String cfPaziente) {
-//        this.cfPaziente = cfPaziente;
-//    }
-//    public String getIdDipendente() {
-//        return idDipendente;
-//    }
-//    public void setIdDipendente(String idDipendente) {
-//        this.idDipendente = idDipendente;
-//    }
+    public String getCfPaziente() {
+        return cfPaziente;
+    }
+    public void setCfPaziente(String cfPaziente) {
+        this.cfPaziente = cfPaziente;
+    }
+    public String getIdInfermiere() {
+        return idInfermiere;
+    }
     public LocalDate getDataRegistrazione() {
         return dataRegistrazione;
     }
@@ -70,7 +70,7 @@ public class Monitoraggio {
     public Dipendente getDipendente() {
         return dipendente;
     }
-    public void setDipendente(Dipendente dipendente) {
+    public void setDipendente(Infermiere dipendente) {
         this.dipendente = dipendente;
     }
     public void setNote(String note) {

@@ -1,10 +1,16 @@
 package it.unipv.posw.careconnectpro.jdbc;
 
+import it.unipv.posw.careconnectpro.jdbc.bean.cartella.CartellaClinicaDAO;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartella.CartellaClinicaDB;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartella.ICartellaClinica;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartella.terapia.ITerapiaDAO;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartella.terapia.TerapiaDAO;
 import it.unipv.posw.careconnectpro.jdbc.bean.persona.IPersonaDAO;
 import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDAO;
 import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.CartellaClinica;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Monitoraggio;
 import it.unipv.posw.careconnectpro.model.persona.Persona;
-import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.FactoryDipendente;
 
@@ -12,9 +18,13 @@ public class FacadeSingletonDB {
 
     private static FacadeSingletonDB istanza;
     private IPersonaDAO personaDAO;
+    private ICartellaClinica cartellaClinicaDAO;
+    private ITerapiaDAO terapiaDAO;
 
     public FacadeSingletonDB() {
         personaDAO = new PersonaDAO();
+        cartellaClinicaDAO =  new CartellaClinicaDAO();
+        terapiaDAO = new TerapiaDAO();
     }
 
     public static FacadeSingletonDB getIstanza() {
@@ -59,6 +69,23 @@ public class FacadeSingletonDB {
 
     public boolean deletePersona(String cf) {
         return personaDAO.deletePersonaByCf(cf);
+    }
+
+    public boolean insertCartellaClinica(CartellaClinica cc) {
+        CartellaClinicaDB cartellaClinicaDB;
+        cartellaClinicaDB = new CartellaClinicaDB(
+                cc.getIdPaziente(),
+                cc.getDataCreazione()
+        );
+        return cartellaClinicaDAO.insertCartellaClinica(cartellaClinicaDB);
+    }
+
+    public boolean deleteCartellaClinica(String cf)	{
+        return cartellaClinicaDAO.deleteCartellaClinicaByCf(cf);
+    }
+
+    public boolean insertMonitoraggio(Monitoraggio m) {
+
     }
 
 
