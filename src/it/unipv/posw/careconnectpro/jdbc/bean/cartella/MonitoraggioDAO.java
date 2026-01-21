@@ -1,7 +1,7 @@
-package it.unipv.posw.careconnectpro.jdbc.bean.diaro;
+package it.unipv.posw.careconnectpro.jdbc.bean.cartella;
 
 import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
-import it.unipv.posw.careconnectpro.model.parametri.diaro.Monitoraggio;
+import it.unipv.posw.careconnectpro.model.parametri.cartella.Monitoraggio;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 
 import java.sql.*;
@@ -14,21 +14,19 @@ public class MonitoraggioDAO {
 
         boolean result = true;
 
-        String sql = "INSERT INTO MONITORAGGI (ID_RILEVAZIONE, ID_DIARIO, ID_DIPENDENTE" +
-                " ID_PAZIENTE, TIPO_PARAMETRO, DATA_MONITORAGGIO, STATO, VALORE, NOTE " +
-                "VALUES (?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO MONITORAGGI ( ID_CARTELLA_CLINICA, ID_INFERMIERE," +
+                "TIPO_PARAMETRO, VALORE, DATA_MONITORAGGIO, STATO,  ALERT, NOTE " +
+                "VALUES (?,?,?,?,?,?,?,?)";
 
         try (Connection conn = ConnessioneDB.startConnection("cpp")) {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, monitoraggio.getIdMonitoraggio());
-            ps.setString(2, monitoraggio.getPaziente().getDiarioParamentri().getIdDiario());
-            ps.setDate(3, Date.valueOf(monitoraggio.getDataRegistrazione()));
-            ps.setString(4, monitoraggio.getDipendente().getCodiceFiscale());
-            ps.setString(5, monitoraggio.getPaziente().getCodiceFiscale());
-            ps.setString(6, monitoraggio.getStringParametroVitale());
-            ps.setString(7, monitoraggio.getParametroVitale().getStato());
-            ps.setInt(8, monitoraggio.getParametroVitale().getValore());
-            ps.setString(9, monitoraggio.getNote());
+            ps.setString(1, monitoraggio.getPaziente().getCartellaClinica().getIdCartellaClinica());
+            ps.setString(2, monitoraggio.getDipendente().getCodiceFiscale());
+            ps.setString(3, String.valueOf(monitoraggio.getParametroVitale()));
+            ps.setInt(4, monitoraggio.getParametroVitale().getValore());
+            ps.setDate(5, Date.valueOf(monitoraggio.getDataRegistrazione()));
+            ps.setString(6, monitoraggio.getParametroVitale().getStato());
+            ps.setString(7, monitoraggio.getNote());
 
             ps.executeUpdate();
 

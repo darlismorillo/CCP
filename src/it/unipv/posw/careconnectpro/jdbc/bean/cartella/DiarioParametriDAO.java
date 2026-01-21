@@ -1,7 +1,7 @@
-package it.unipv.posw.careconnectpro.jdbc.bean.diaro;
+package it.unipv.posw.careconnectpro.jdbc.bean.cartella;
 
 import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
-import it.unipv.posw.careconnectpro.model.parametri.diaro.Monitoraggio;
+import it.unipv.posw.careconnectpro.model.parametri.cartella.Monitoraggio;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 
 import java.sql.*;

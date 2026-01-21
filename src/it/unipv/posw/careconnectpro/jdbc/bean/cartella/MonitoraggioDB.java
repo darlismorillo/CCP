@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.jdbc.bean.diaro;
+package it.unipv.posw.careconnectpro.jdbc.bean.cartella;
 
 import java.time.LocalDate;
 
