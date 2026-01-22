@@ -8,8 +8,6 @@ import java.time.LocalDate;
 
 public class Monitoraggio {
 
-//  private String cfPaziente;
-//  private String idDipendente;
     private String note;
     private String idMonitoraggio , idCartellaClinica;
     private String cfPaziente, idInfermiere;
@@ -19,7 +17,7 @@ public class Monitoraggio {
     private Paziente paziente;
     private Dipendente dipendente;
 
-    public  Monitoraggio(String idCartellaClinica, Paziente paziente , Infermiere infermiere,
+    public  Monitoraggio(String idCartellaClinica, Paziente paziente , Dipendente infermiere,
                          ParametroVitale parametroVitale, Alert alert, String note) {
 
         this.idMonitoraggio = idMonitoraggio;

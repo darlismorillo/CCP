@@ -22,8 +22,12 @@ public class RSAService implements IRSA {
 
     @Override
     public boolean registrazioneDipendente(Dipendente d) {
+        boolean inPersona, inCartellaClinica;
         System.out.println("registrazione Dipendente avvenuta con successo");
-        return facadeDB.insertPersona(d);
+        facadeDB.insertPersona(d);
+        facadeDB.insertCartellaClinica();
+
+        return true;
     }
     @Override
     public boolean rimuoviDipendente(String cf) {

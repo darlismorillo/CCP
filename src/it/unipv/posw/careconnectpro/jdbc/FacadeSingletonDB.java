@@ -23,7 +23,7 @@ public class FacadeSingletonDB {
 
     public FacadeSingletonDB() {
         personaDAO = new PersonaDAO();
-        cartellaClinicaDAO =  new CartellaClinicaDAO();
+        cartellaClinicaDAO = new CartellaClinicaDAO();
         terapiaDAO = new TerapiaDAO();
     }
 
@@ -73,19 +73,26 @@ public class FacadeSingletonDB {
 
     public boolean insertCartellaClinica(CartellaClinica cc) {
         CartellaClinicaDB cartellaClinicaDB;
+        int id;
         cartellaClinicaDB = new CartellaClinicaDB(
                 cc.getIdPaziente(),
-                cc.getDataCreazione()
-        );
-        return cartellaClinicaDAO.insertCartellaClinica(cartellaClinicaDB);
+                cc.getDataCreazione());
+
+        cartellaClinicaDAO.insertCartellaClinica(cartellaClinicaDB);
+        id = cartellaClinicaDAO.selectIdCartellaClinica(cc.getIdPaziente());
+        if (id != -1) {
+            cc.setIdCartellaClinica(id);
+        } else {
+            System.out.println("Id non configurato correttamente");
+            return false;
+        }
+
+
+        return true;
     }
 
     public boolean deleteCartellaClinica(String cf)	{
         return cartellaClinicaDAO.deleteCartellaClinicaByCf(cf);
-    }
-
-    public boolean insertMonitoraggio(Monitoraggio m) {
-
     }
 
 

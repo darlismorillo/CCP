@@ -6,14 +6,21 @@ public class CartellaClinicaDB {
 
 
     private String idPaziente;
+    private int idCartella;
     private LocalDate dataCreazione;
 
-    public CartellaClinicaDB( String idPazinete, LocalDate dataCreazione) {
+    public CartellaClinicaDB(String idPazinete, LocalDate dataCreazione) {
+        this.setIdCartella(idCartella);
         this.idPaziente = idPazinete;
         this.dataCreazione = dataCreazione;
     }
 
-
+    public int getIdCartella() {
+        return idCartella;
+    }
+    public void setIdCartella(int idCartella) {
+        this.idCartella = idCartella;
+    }
     public LocalDate getDataCreazione() {
         return dataCreazione;
     }
