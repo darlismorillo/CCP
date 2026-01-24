@@ -64,6 +64,7 @@ public class RSAService implements IRSA {
 	    			return false;
 	    		}
 	    	}
+
 	    	boolean utenteRimosso = facadeDB.deletePersona(p);
 	    	if (!utenteRimosso) {
 	    		System.out.println("Errore nella rimozione dell'utente " + p.getCodiceFiscale());

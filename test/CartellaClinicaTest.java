@@ -1,4 +1,6 @@
+import it.unipv.posw.careconnectpro.model.cartellaclinica.CartellaClinica;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
+import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 import org.junit.Before;
 import  org.junit.Test;
 
@@ -7,12 +9,13 @@ import java.time.LocalDate;
 public class CartellaClinicaTest {
 
     private Paziente paziente;
+
     @Before
     public void setUp() {
         // Dati identificativi
         String codiceFiscale = "BNCFRC85M10H501Z";
         String nome = "Francesco";
-        String cognome = "Barbieri"; // Cognome comune e non legato a colori
+        String cognome = "Barbieri";
 
         // Date
         LocalDate dataNascita = LocalDate.of(1985, 8, 10);
@@ -22,7 +25,7 @@ public class CartellaClinicaTest {
         String email = "f.barbieri85@provider.it";
         String cellulare = "3479876543";
         String id = "PAZ-99";
-        String password = "StrongPassword789!";
+        String password = null;
 
         // Creazione dell'oggetto Paziente
         paziente = new Paziente(
@@ -32,7 +35,6 @@ public class CartellaClinicaTest {
                 dataNascita,
                 email,
                 cellulare,
-                id,
                 password,
                 dataAssunzione
         );
@@ -40,8 +42,12 @@ public class CartellaClinicaTest {
 
     @Test
     public void creazioneCartella(){
-        System.out.println("ID Cartella: " + paziente.getCartellaClinica().getIdCartellaClinica());
+        CartellaClinica c = new CartellaClinica(paziente);
+
+
     }
+
+
 
 }
 

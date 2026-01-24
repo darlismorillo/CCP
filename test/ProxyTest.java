@@ -26,30 +26,27 @@ public class ProxyTest {
     }
 
 
-//    @Test
-//    public void connessione(){
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            System.out.println("Driver trovato e caricato con successo!");
-//        } catch (ClassNotFoundException e) {
-//            System.err.println("Driver non trovato! Controlla il Classpath.");
-//            e.printStackTrace();
-//        }
-
-//    }
-
     @Test
     public void testInserimento(){
         ProxyRSA proxyRSA = new ProxyRSA(amministratore);
-        boolean risultato = proxyRSA.registrazioneDipendente(dipendenteNuovo);
+        boolean risultato = proxyRSA.registraUtente(dipendenteNuovo);
         System.out.println("True: registrato con successo, False: registrazione fallita --> risulalto =  " + risultato);
     }
 
    @Test
     public void testInserimentoFallito(){
         ProxyRSA proxyRSA = new ProxyRSA(medico);
-       boolean risultato = proxyRSA.registrazioneDipendente(dipendenteNuovo);
+       boolean risultato = proxyRSA.registraUtente(dipendenteNuovo);
        System.out.println("True: registrato con successo, False: registrazione fallita --> risulalto = " + risultato);
    }
+
+    @Test
+    public void deleteTest(){
+        ProxyRSA proxyRSA = new ProxyRSA(amministratore);
+
+        proxyRSA.rimuoviUtente(medico);
+        proxyRSA.rimuoviUtente(dipendenteNuovo);
+
+    }
 }
 
