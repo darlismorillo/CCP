@@ -15,7 +15,7 @@ import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 public class RSAService implements IRSA {
 	
     private final FacadeSingletonDB facadeDB;
-
+    private Dipendente utenteLoggato= null;
     
     public RSAService() {
         facadeDB = FacadeSingletonDB.getIstanza();
@@ -77,10 +77,12 @@ public class RSAService implements IRSA {
 
     public Dipendente login (String cf, String password) {
         Dipendente d = facadeDB.findDipendenteByCf(cf);
-        if (d == null) return null;
+        if (d == null) {
+            System.out.println("Logout effetuato");
+            return null;
+        }
         if (d.getPassword().equals(password)){
             System.out.println("Login Dipendente avvenuta con successo " + password);
-
             return d;
         }
 
@@ -135,6 +137,13 @@ public class RSAService implements IRSA {
 	    m.setAlert(Alert.RISOLTO);
 	    return facadeDB.updateAlertMonitoraggio(m);
 	}
-	
+
+    public Dipendente getDipendenteByCf(String cf) {
+        return facadeDB.findDipendenteByCf(cf);
+    }
+
+    public void setUtenteLoggato(Dipendente utenteLoggato) {
+        this.utenteLoggato = utenteLoggato;
+    }
 }
 

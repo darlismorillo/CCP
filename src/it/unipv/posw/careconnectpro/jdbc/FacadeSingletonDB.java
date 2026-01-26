@@ -94,7 +94,6 @@ public class FacadeSingletonDB {
                 db.getDataNascita(),
                 db.getEmail(),
                 db.getNumeroTelefonico(),
-                db.getPassword(),
                 db.getDataInizio()
         );
         return paziente;
