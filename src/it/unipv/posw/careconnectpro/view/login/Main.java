@@ -1,6 +1,6 @@
 package it.unipv.posw.careconnectpro.view.login;
 
-import it.unipv.posw.careconnectpro.controller.login.FacadeController;
+import it.unipv.posw.careconnectpro.controller.FacadeController;
 import it.unipv.posw.careconnectpro.model.rsa.RSAService;
 
 public class Main {
