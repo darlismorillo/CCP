@@ -37,33 +37,23 @@ public class LoginPanel extends JPanel {
     public JButton getLoginButton() {
         return loginButton;
     }
-    public void setLoginButton(JButton loginButton) {
-        this.loginButton = loginButton;
-    }
+
     public JPasswordField getPasswordField() {
         return passwordField;
     }
-    public void setPasswordField(JPasswordField passwordField) {
-        this.passwordField = passwordField;
-    }
+
     public JTextField getCfField() {
         return cfField;
     }
-    public void setCfField(JTextField cfField) {
-        this.cfField = cfField;
-    }
+
     public JLabel getPasswordLabel() {
         return passwordLabel;
     }
-    public void setPasswordLabel(JLabel passwordLabel) {
-        this.passwordLabel = passwordLabel;
-    }
+
     public JLabel getCfLabel() {
         return cfLabel;
     }
-    public void setCfLabel(JLabel cfLabel) {
-        this.cfLabel = cfLabel;
-    }
+
 
 
 }

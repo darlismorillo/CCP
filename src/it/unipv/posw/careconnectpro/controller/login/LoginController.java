@@ -1,7 +1,7 @@
 package it.unipv.posw.careconnectpro.controller.login;
 
 import it.unipv.posw.careconnectpro.model.rsa.RSAService;
-import it.unipv.posw.careconnectpro.view.login.ViewController;
+import it.unipv.posw.careconnectpro.view.ViewController;
 
 
 
@@ -24,7 +24,7 @@ public class LoginController {
 
     }
 
-    public void addlogoutActionListener(){
+    private void addlogoutActionListener(){
         LogoutActionListener logout = new LogoutActionListener(rsa, view);
         view.getAmmPanel().getLogoutButton().addActionListener(logout);
     }

@@ -3,7 +3,7 @@ package it.unipv.posw.careconnectpro.controller.login;
 import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 import it.unipv.posw.careconnectpro.model.rsa.RSAService;
-import it.unipv.posw.careconnectpro.view.login.ViewController;
+import it.unipv.posw.careconnectpro.view.ViewController;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,12 +25,12 @@ public class GoBtnActionListener implements ActionListener {
 
         Dipendente utenteLoggato = model.getDipendenteByCf(cf);
         TipoUtente ruolo = utenteLoggato.getTipoUtente();
+        pulisciTextField();
         view.getLoginPanel().setVisible(false);
         model.setUtenteLoggato(utenteLoggato);
 
 //        if(utenteLoggato != null) {
             switch (ruolo) {
-
                 case AMMINISTRATORE:
                     view.getLoginPanel().setVisible(false);
                     view.getAmmPanel().setVisible(true);
@@ -50,6 +50,11 @@ public class GoBtnActionListener implements ActionListener {
 //        else {
 //            PopUp.infoBox("Username o password incorretti", "Errore");
 //        }
+
+    private void pulisciTextField(){
+        view.getLoginPanel().getCfField().setText(null);
+        view.getLoginPanel().getPasswordField().setText(null);
+    }
 
 
 

@@ -1,15 +1,17 @@
-package it.unipv.posw.careconnectpro.view.login;
+package it.unipv.posw.careconnectpro.view;
 
 import it.unipv.posw.careconnectpro.view.dipendenti.AmmPanel;
+import it.unipv.posw.careconnectpro.view.dipendenti.RegistrazioneUtentePanel;
+import it.unipv.posw.careconnectpro.view.login.LoginPanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ViewController extends JFrame {
     private JFrame frame;
     private JPanel panel;
     private LoginPanel loginPanel;
     private AmmPanel ammPanel;
+    private RegistrazioneUtentePanel regUtentePanel;
 
     public  ViewController() {
         frame = new JFrame();
@@ -29,6 +31,11 @@ public class ViewController extends JFrame {
         panel.add(ammPanel);
         ammPanel.setVisible(false);
 
+        regUtentePanel = new RegistrazioneUtentePanel();
+        panel.add(regUtentePanel);
+        regUtentePanel.setVisible(false);
+
+
         frame.setVisible(true);
 
     }
@@ -37,6 +44,7 @@ public class ViewController extends JFrame {
         return loginPanel;
     }
     public AmmPanel getAmmPanel() { return ammPanel; }
-
-
+    public RegistrazioneUtentePanel getRegUtentePanel() {
+        return regUtentePanel;
+    }
 }
