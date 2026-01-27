@@ -30,9 +30,9 @@ public class ProxyRSA implements IRSA {
     }
 
     @Override
-    public boolean rimuoviUtente(Persona persona)	{
+    public boolean rimuoviUtente(String cf)	{
         if(utenteLoggato != null  && utenteLoggato.getTipoUtente() == TipoUtente.AMMINISTRATORE) {
-            return rsa.rimuoviUtente(persona);
+            return rsa.rimuoviUtente(cf);
         }
         throw new RuntimeException("Solo gli amministratori possono rimuovere le persone");
     }
