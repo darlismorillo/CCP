@@ -55,5 +55,10 @@ public class GestionePazientePanel extends JPanel {
     public JButton getBackButton() {
         return backButton;
     }
-
+    public JTable getPazienteTable() {
+        return pazienteTable;
+    }
+    public PazientiTable getTabellaPazienti() {
+        return tabellaPazienti;
+    }
 }

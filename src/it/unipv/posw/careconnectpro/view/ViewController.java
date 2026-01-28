@@ -4,6 +4,7 @@ import it.unipv.posw.careconnectpro.view.dipendenti.amministratore.AmmPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.amministratore.RegistrazioneUtentePanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.infermiere.GestionePazientePanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.infermiere.InfPanel;
+import it.unipv.posw.careconnectpro.view.dipendenti.infermiere.MonitoraggioPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.medico.ListMonitoraggioPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.medico.MedPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.medico.TerapiaPanel;
@@ -22,6 +23,7 @@ public class ViewController extends JFrame {
     private TerapiaPanel terapiaPanel;
     private InfPanel infPanel;
     private GestionePazientePanel GestionePazPanel;
+    private MonitoraggioPanel monitoraggioPanel;
 
 
 
@@ -70,6 +72,11 @@ public class ViewController extends JFrame {
         panel.add(GestionePazPanel);
         GestionePazPanel.setVisible(false);
 
+        monitoraggioPanel = new MonitoraggioPanel();
+        panel.add(monitoraggioPanel);
+        monitoraggioPanel.setVisible(false);
+
+
 
         frame.setVisible(true);
 
@@ -97,5 +104,7 @@ public class ViewController extends JFrame {
     public GestionePazientePanel getGestionePazPanel() {
         return GestionePazPanel;
     }
-
+    public MonitoraggioPanel getMonitoraggioPanel() {
+        return monitoraggioPanel;
+    }
 }

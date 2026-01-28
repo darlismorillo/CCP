@@ -36,6 +36,10 @@ public class PazientiTable extends AbstractTableModel {
             default: return null;
         }
     }
+    @Override
+    public String getColumnName(int column) {
+        return columnNames[column];
+    }
 
     public Paziente getPaziente(int row) {
         return pazienti.get(row);
