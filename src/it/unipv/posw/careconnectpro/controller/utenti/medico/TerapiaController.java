@@ -34,7 +34,6 @@ public class TerapiaController {
 
         view.getTerapiaPanel().getAddTerapiaButton().addActionListener(e-> addTerapia());
         view.getTerapiaPanel().getBackButton().addActionListener(indietroTerapia);
-        view.getTerapiaPanel().getConfermaButton().addActionListener(indietroTerapia);
 
 
     }
