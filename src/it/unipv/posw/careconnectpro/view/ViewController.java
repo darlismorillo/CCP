@@ -2,6 +2,8 @@ package it.unipv.posw.careconnectpro.view;
 
 import it.unipv.posw.careconnectpro.view.dipendenti.amministratore.AmmPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.amministratore.RegistrazioneUtentePanel;
+import it.unipv.posw.careconnectpro.view.dipendenti.infermiere.GestionePazientePanel;
+import it.unipv.posw.careconnectpro.view.dipendenti.infermiere.InfPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.medico.ListMonitoraggioPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.medico.MedPanel;
 import it.unipv.posw.careconnectpro.view.dipendenti.medico.TerapiaPanel;
@@ -18,6 +20,9 @@ public class ViewController extends JFrame {
     private MedPanel medPanel;
     private ListMonitoraggioPanel listMonitoraggioPanel;
     private TerapiaPanel terapiaPanel;
+    private InfPanel infPanel;
+    private GestionePazientePanel PazientePanel;
+
 
 
     public  ViewController() {
@@ -26,7 +31,7 @@ public class ViewController extends JFrame {
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1800, 1000);
+        frame.setSize(1000, 800);
         frame.setLocationRelativeTo(null);
         frame.setTitle("CareConnectPro");
         frame.getContentPane().add(panel);
@@ -34,6 +39,7 @@ public class ViewController extends JFrame {
         loginPanel = new LoginPanel();
         panel.add(loginPanel);
 
+        //AMMINISTRATORE
         ammPanel = new AmmPanel();
         panel.add(ammPanel);
         ammPanel.setVisible(false);
@@ -42,6 +48,7 @@ public class ViewController extends JFrame {
         panel.add(regUtentePanel);
         regUtentePanel.setVisible(false);
 
+        //MEDICO
         medPanel = new MedPanel();
         panel.add(medPanel);
         medPanel.setVisible(false);
@@ -54,6 +61,14 @@ public class ViewController extends JFrame {
         panel.add(terapiaPanel);
         terapiaPanel.setVisible(false);
 
+        //INFERMIERE
+        infPanel = new InfPanel();
+        panel.add(infPanel);
+        infPanel.setVisible(false);
+
+        PazientePanel = new GestionePazientePanel();
+        panel.add(PazientePanel);
+        PazientePanel.setVisible(false);
 
 
         frame.setVisible(true);
@@ -76,4 +91,11 @@ public class ViewController extends JFrame {
     public TerapiaPanel getTerapiaPanel() {
         return terapiaPanel;
     }
+    public InfPanel getInfPanel() {
+        return infPanel;
+    }
+    public GestionePazientePanel getPazientePanel() {
+        return PazientePanel;
+    }
+
 }
