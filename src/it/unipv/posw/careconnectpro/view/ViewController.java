@@ -21,7 +21,7 @@ public class ViewController extends JFrame {
     private ListMonitoraggioPanel listMonitoraggioPanel;
     private TerapiaPanel terapiaPanel;
     private InfPanel infPanel;
-    private GestionePazientePanel PazientePanel;
+    private GestionePazientePanel GestionePazPanel;
 
 
 
@@ -66,9 +66,9 @@ public class ViewController extends JFrame {
         panel.add(infPanel);
         infPanel.setVisible(false);
 
-        PazientePanel = new GestionePazientePanel();
-        panel.add(PazientePanel);
-        PazientePanel.setVisible(false);
+        GestionePazPanel = new GestionePazientePanel();
+        panel.add(GestionePazPanel);
+        GestionePazPanel.setVisible(false);
 
 
         frame.setVisible(true);
@@ -94,8 +94,8 @@ public class ViewController extends JFrame {
     public InfPanel getInfPanel() {
         return infPanel;
     }
-    public GestionePazientePanel getPazientePanel() {
-        return PazientePanel;
+    public GestionePazientePanel getGestionePazPanel() {
+        return GestionePazPanel;
     }
 
 }

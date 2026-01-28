@@ -10,6 +10,7 @@ public class InfController {
     private IRSA model;
     private ViewController view;
     private BtnAddMonitoraggioAL addMonitoraggio;
+    private GestioniPazientiController gestioneController;
 
 
     public InfController(IRSA model, ViewController view) {
@@ -17,6 +18,7 @@ public class InfController {
         this.view = view;
 
         addMonitoraggio = new BtnAddMonitoraggioAL(view);
+        gestioneController = new GestioniPazientiController(view, model);
 
         view.getInfPanel().getMonitoraggioButton().addActionListener(addMonitoraggio);
 

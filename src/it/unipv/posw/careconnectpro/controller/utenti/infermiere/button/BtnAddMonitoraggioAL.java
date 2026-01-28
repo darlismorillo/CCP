@@ -17,7 +17,7 @@ public class BtnAddMonitoraggioAL implements ActionListener {
     public void actionPerformed(ActionEvent e){
         view.getLoginPanel().setVisible(false);
         view.getInfPanel().setVisible(false);
-        view.getPazientePanel().setVisible(true);
+        view.getGestionePazPanel().setVisible(true);
 
     }
 }

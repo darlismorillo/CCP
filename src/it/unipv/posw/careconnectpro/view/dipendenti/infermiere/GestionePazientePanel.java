@@ -1,5 +1,8 @@
 package it.unipv.posw.careconnectpro.view.dipendenti.infermiere;
 
+import it.unipv.posw.careconnectpro.model.rsa.IRSA;
+import it.unipv.posw.careconnectpro.model.rsa.RSAService;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -7,6 +10,9 @@ public class GestionePazientePanel extends JPanel {
 
     private JTable pazienteTable;
     private JButton inserisciButton, backButton;
+    private PazientiTable tabellaPazienti;
+    private IRSA model;
+
 
     public GestionePazientePanel() {
         Font mediumFont = new Font("Arial", 0, 16);
@@ -14,9 +20,18 @@ public class GestionePazientePanel extends JPanel {
         setVisible(true);
         setLayout(new BorderLayout());
 
-        pazienteTable = new JTable();
+        model = new RSAService();
+        tabellaPazienti = new PazientiTable(model.cercaPazienti());
+
+        pazienteTable = new JTable(tabellaPazienti);
         pazienteTable.setFont(mediumFont);
         //pazienteTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        pazienteTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+        pazienteTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+        pazienteTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        pazienteTable.getColumnModel().getColumn(3).setPreferredWidth(150);
+
+
         JScrollPane scrollPane = new JScrollPane(pazienteTable);
 
 

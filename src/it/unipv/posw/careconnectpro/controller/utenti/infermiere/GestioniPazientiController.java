@@ -7,7 +7,7 @@ import it.unipv.posw.careconnectpro.view.ViewController;
 public class GestioniPazientiController {
     private ViewController view;
     private IRSA model;
-    private BtnBackHomeInfAL  indietroButton;
+    private BtnBackHomeInfAL indietroButton;
 
 
     public GestioniPazientiController(ViewController view, IRSA model) {
@@ -15,7 +15,8 @@ public class GestioniPazientiController {
         this.model = model;
 
         indietroButton = new BtnBackHomeInfAL(view);
-        view.getPazientePanel().getBackButton().addActionListener(indietroButton);
+        view.getGestionePazPanel().getBackButton().addActionListener(indietroButton);
+
 
 
     }
