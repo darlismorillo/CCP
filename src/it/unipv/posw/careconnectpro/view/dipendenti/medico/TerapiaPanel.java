@@ -17,7 +17,7 @@ public class TerapiaPanel extends JPanel {
                             idMonitoraggioField ;
     private JComboBox<StatoTerapia> statoBox;
     private JComboBox<TipoSomministrazione> somministrazioneBox;
-    private JButton addTerapiaButton, backButton, confermaButton;
+    private JButton addTerapiaButton, backButton;
 
     public TerapiaPanel(){
         Font mediumFont = new Font("Arial", 0, 16);
@@ -61,8 +61,6 @@ public class TerapiaPanel extends JPanel {
         idMonitoraggioLabel = new JLabel("ID monitoraggio");
         idMonitoraggioField = new JTextField();
         idMonitoraggioField.setEditable(false);
-        confermaButton = new JButton("Conferma");
-
 
         idCartellaLabel.setFont(mediumFont);
         idPazienteLabel.setFont(mediumFont);
@@ -82,7 +80,7 @@ public class TerapiaPanel extends JPanel {
         noteLabel.setFont(mediumFont);
         addTerapiaButton.setFont(largeFont);
         backButton.setFont(largeFont);
-        confermaButton.setFont(largeFont);
+
 
         add(idMonitoraggioLabel);
         add(idMonitoraggioField);
@@ -113,7 +111,6 @@ public class TerapiaPanel extends JPanel {
         add(noteLabel);
         add(noteField);
         add(addTerapiaButton);
-        add(confermaButton);
         add(backButton);
 
     }
