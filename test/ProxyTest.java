@@ -30,6 +30,7 @@ public class ProxyTest {
     public void testInserimento(){
         ProxyRSA proxyRSA = new ProxyRSA(amministratore);
         boolean risultato = proxyRSA.registraUtente(dipendenteNuovo);
+
         System.out.println("True: registrato con successo, False: registrazione fallita --> risulalto =  " + risultato);
     }
 
