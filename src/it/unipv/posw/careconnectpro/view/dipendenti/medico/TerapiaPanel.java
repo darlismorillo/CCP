@@ -179,7 +179,4 @@ public class TerapiaPanel extends JPanel {
         return backButton;
     }
 
-    public JButton getConfermaButton() {
-        return confermaButton;
-    }
 }
