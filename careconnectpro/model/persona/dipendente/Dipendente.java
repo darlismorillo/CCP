@@ -2,7 +2,6 @@ package src.it.unipv.posw.careconnectpro.model.persona.dipendente;
 
 import it.unipv.posw.careconnectpro.model.persona.Persona;
 import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
-import it.unipv.posw.careconnectpro.model.persona.dipendente.IDipendente;
 
 import java.time.LocalDate;
 
