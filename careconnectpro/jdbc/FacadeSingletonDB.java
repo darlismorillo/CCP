@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.jdbc;
+package src.it.unipv.posw.careconnectpro.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;

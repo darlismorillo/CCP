@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica;
+package src.it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.CartellaClinicaDB;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.ICartellaClinicaDAO;
 
 public class CartellaClinicaDAO implements ICartellaClinicaDAO {
 
@@ -16,7 +18,7 @@ public class CartellaClinicaDAO implements ICartellaClinicaDAO {
 	}
 	
 	@Override
-	public int insertCartellaClinica(CartellaClinicaDB ccDb) {
+	public int insertCartellaClinica(it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.CartellaClinicaDB ccDb) {
 
 	    String query =
 	        "INSERT INTO CARTELLA_CLINICA (ID_PAZIENTE, DATA_CREAZIONE) VALUES (?, ?)";
@@ -44,8 +46,8 @@ public class CartellaClinicaDAO implements ICartellaClinicaDAO {
 	}
     
     @Override
-    public CartellaClinicaDB selectCartellaClinicaByCf(String cf)	{
-        CartellaClinicaDB ccDb = null;
+    public it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.CartellaClinicaDB selectCartellaClinicaByCf(String cf)	{
+        it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.CartellaClinicaDB ccDb = null;
         String query = "SELECT * FROM ccp.CARTELLA_CLINICA WHERE ID_PAZIENTE = ?";
         try (Connection conn = ConnessioneDB.startConnection("ccp");
              PreparedStatement ps = conn.prepareStatement(query)

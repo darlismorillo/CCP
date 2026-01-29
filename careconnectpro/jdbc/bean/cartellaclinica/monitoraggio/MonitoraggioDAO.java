@@ -1,0 +1,140 @@
+package src.it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.IMonitoraggioDAO;
+import it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB;
+
+public class MonitoraggioDAO implements IMonitoraggioDAO {
+
+	public MonitoraggioDAO() {
+	}
+	
+	@Override
+	public int insertMonitoraggio (it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB mDb)	{
+		String query =
+                "INSERT INTO MONITORAGGI" + " "
+                		+ "(ID_CARTELLA_CLINICA, ID_PAZIENTE, ID_INFERMIERE, TIPO_PARAMETRO, VALORE, DATA_MONITORAGGIO, ALERT, NOTE)" 
+                		+ "VALUES (?,?,?,?,?,?,?,?)";
+		try (Connection conn = ConnessioneDB.startConnection("ccp");
+	    		PreparedStatement ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, mDb.getIdCartellaClinica());
+            ps.setString(2, mDb.getIdPaziente());
+            ps.setString(3, mDb.getIdInferimere());
+            ps.setString(4, mDb.getTipoParametro());
+            ps.setString(5, mDb.getValore());
+            ps.setDate(6, Date.valueOf(mDb.getDataMonitoraggio()));
+            ps.setString(7, mDb.getAlert());
+            ps.setString(8, mDb.getNote());
+            ps.executeUpdate();
+
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+	            if (rs.next()) {
+	                int generatedId = rs.getInt(1);
+	                mDb.setIdMonitoraggio(generatedId); 
+	                return generatedId;
+	            }
+	        } 
+	        
+	        throw new SQLException("Errore: ID_CARTELLA_CLINICA non generato");
+        } catch (Exception e) {
+        		throw new RuntimeException(e);
+        }
+	}
+
+    @Override
+    public it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB selectMonitoraggioById(int idMonitoraggio)	{
+        String query = "SELECT * FROM MONITORAGGI WHERE ID_MONITORAGGIO = ? " ;
+        it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB mDb = null;
+
+        try (Connection conn = ConnessioneDB.startConnection("ccp");
+             PreparedStatement ps = conn.prepareStatement(query);
+             ) {
+            ps.setInt(1, idMonitoraggio);
+
+             try (ResultSet rs = ps.executeQuery()){
+                 if (rs.next()) {
+                    mDb = new it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB(
+                             rs.getInt("ID_CARTELLA_CLINICA"),
+                             rs.getString("ID_PAZIENTE"),
+                             rs.getString("ID_INFERMIERE"),
+                             rs.getString("TIPO_PARAMETRO"),
+                             rs.getString("VALORE"),
+                             rs.getDate("DATA_MONITORAGGIO").toLocalDate(),
+                             rs.getString("ALERT"),
+                             rs.getString("NOTE")
+                     );
+                     mDb.setIdMonitoraggio(rs.getInt("ID_MONITORAGGIO"));
+
+                 }
+             } catch (Exception e) {
+                 throw new RuntimeException(e);
+             }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return mDb;
+    }
+	
+	public List<it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB> selectMonitoraggioByAlertAttivo()	{
+		String query = "SELECT * FROM MONITORAGGI WHERE ALERT = 'ATTIVO'";
+		
+		List<it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB> monitoraggi = new ArrayList<>();
+
+	    try (Connection conn = ConnessioneDB.startConnection("ccp");
+	         PreparedStatement ps = conn.prepareStatement(query);
+	         ResultSet rs = ps.executeQuery()) {
+	        while (rs.next()) {
+	            it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB mDb = new it.unipv.posw.careconnectpro.jdbc.bean.cartellaclinica.monitoraggio.MonitoraggioDB(
+	                rs.getInt("ID_CARTELLA_CLINICA"),
+	                rs.getString("ID_PAZIENTE"),
+	                rs.getString("ID_INFERMIERE"),
+	                rs.getString("TIPO_PARAMETRO"),
+	                rs.getString("VALORE"),
+	                rs.getDate("DATA_MONITORAGGIO").toLocalDate(),
+	                rs.getString("ALERT"),
+	                rs.getString("NOTE")
+	            );
+	            mDb.setIdMonitoraggio(rs.getInt("ID_MONITORAGGIO"));
+	            monitoraggi.add(mDb);
+	        }
+	    } catch (Exception e) {
+	        throw new RuntimeException(e);
+	    }
+	    return monitoraggi;				
+	}
+	
+	@Override
+	public boolean updateAlertMonitoraggio(MonitoraggioDB mDb) {
+	    String query = "UPDATE MONITORAGGI SET ALERT = ? WHERE ID_MONITORAGGIO = ?";
+	    
+	    try (Connection conn = ConnessioneDB.startConnection("ccp");
+		     PreparedStatement ps = conn.prepareStatement(query);) {
+
+            ps.setString(1,  mDb.getAlert());
+	        ps.setInt(2, mDb.getIdMonitoraggio());
+
+	        int rowsUpdated = ps.executeUpdate();
+            System.out.println("Eseguo update su ID: " + mDb.getIdMonitoraggio() + " con stato: " + mDb.getAlert());
+	        return rowsUpdated > 0;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+
+
+}

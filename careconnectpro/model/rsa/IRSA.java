@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.model.rsa;
+package src.it.unipv.posw.careconnectpro.model.rsa;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package it.unipv.posw.careconnectpro.model.rsa;
+package src.it.unipv.posw.careconnectpro.model.rsa;
 
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
@@ -10,6 +10,8 @@ import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Monitorag
 import it.unipv.posw.careconnectpro.model.cartellaclinica.terapia.Terapia;
 import it.unipv.posw.careconnectpro.model.persona.Persona;
 import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
+import it.unipv.posw.careconnectpro.model.rsa.IRSA;
+import it.unipv.posw.careconnectpro.model.rsa.RSAService;
 
 public class ProxyRSA implements IRSA {
 

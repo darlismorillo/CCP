@@ -1,6 +1,8 @@
-package it.unipv.posw.careconnectpro.jdbc.bean.persona;
+package src.it.unipv.posw.careconnectpro.jdbc.bean.persona;
 
 import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
+import it.unipv.posw.careconnectpro.jdbc.bean.persona.IPersonaDAO;
+import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB;
 import it.unipv.posw.careconnectpro.model.persona.Persona;
 
 import java.sql.*;
@@ -13,7 +15,7 @@ public class PersonaDAO  implements IPersonaDAO {
     }
 
     @Override
-    public boolean insertPersona(PersonaDB p) {
+    public boolean insertPersona(it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB p) {
         String query =
                 "INSERT INTO UTENTI " +
                         "(CODICE_FISCALE, NOME, COGNOME, DATA_DI_NASCITA, EMAIL, NUMERO_TELEFONICO, PASSWORD_UTENTE, " +
@@ -42,8 +44,8 @@ public class PersonaDAO  implements IPersonaDAO {
     }
 
     @Override
-    public PersonaDB selectPersonaByCf(String cf) {
-        PersonaDB p = null;
+    public it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB selectPersonaByCf(String cf) {
+        it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB p = null;
         String query = "SELECT * FROM ccp.UTENTI WHERE CODICE_FISCALE = ?";
         try (Connection conn = ConnessioneDB.startConnection("ccp");
              PreparedStatement ps = conn.prepareStatement(query)
@@ -51,7 +53,7 @@ public class PersonaDAO  implements IPersonaDAO {
             ps.setString(1, cf);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    p = new PersonaDB(
+                    p = new it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB(
                             rs.getString("CODICE_FISCALE"),
                             rs.getString("NOME"),
                             rs.getString("COGNOME"),
@@ -72,8 +74,8 @@ public class PersonaDAO  implements IPersonaDAO {
     }
     
     @Override
-    public PersonaDB selectPersonaAttivaByCf(String cf) {
-	    	PersonaDB pDb = null; 
+    public it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB selectPersonaAttivaByCf(String cf) {
+	    	it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB pDb = null;
 	    	String query = "SELECT * FROM UTENTI WHERE CODICE_FISCALE = ? AND STATO = TRUE";
 	    	try (Connection conn = ConnessioneDB.startConnection("ccp");
 	    			PreparedStatement ps = conn.prepareStatement(query)
@@ -81,7 +83,7 @@ public class PersonaDAO  implements IPersonaDAO {
 	    		ps.setString(1, cf);
 	    		try (ResultSet rs = ps.executeQuery()) {
 	    			if (rs.next()) {
-	    				pDb = new PersonaDB(
+	    				pDb = new it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB(
 	    						rs.getString("CODICE_FISCALE"),
 	    						rs.getString("NOME"),
 	    						rs.getString("COGNOME"),
@@ -103,16 +105,16 @@ public class PersonaDAO  implements IPersonaDAO {
 
     
     @Override
-    public List<PersonaDB> selectPazienti()	{
+    public List<it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB> selectPazienti()	{
     		String query = "SELECT * FROM UTENTI WHERE RUOLO_UTENTE = 'PAZIENTE' ";
     		
-    		List<PersonaDB> pazienti = new ArrayList<>();
+    		List<it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB> pazienti = new ArrayList<>();
     		
     		try (Connection conn = ConnessioneDB.startConnection("ccp");
     		         PreparedStatement ps = conn.prepareStatement(query);
     		         ResultSet rs = ps.executeQuery()) {
     		        while (rs.next()) {
-    		            PersonaDB pDb = new PersonaDB(
+    		            it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB pDb = new PersonaDB(
     		                rs.getString("CODICE_FISCALE"),
     		                rs.getString("NOME"),
     		                rs.getString("COGNOME"),
