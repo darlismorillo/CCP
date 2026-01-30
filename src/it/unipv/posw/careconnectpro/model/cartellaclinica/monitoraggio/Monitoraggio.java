@@ -24,7 +24,7 @@ public class Monitoraggio {
 
     public  Monitoraggio(CartellaClinica cartellaClinica, Paziente paziente , Dipendente infermiere,
                          TipiParametroVitale tipiParametroVitale, String valore, LocalDate dataMonitoraggio, 
-                         Alert alert, String note) {
+                         String note) {
         this.setIdMonitoraggio(idMonitoraggio);
         this.cartellaClinica = cartellaClinica;
         this.paziente = paziente;

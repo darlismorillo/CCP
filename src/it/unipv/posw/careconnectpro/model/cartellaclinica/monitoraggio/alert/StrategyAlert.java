@@ -15,11 +15,11 @@ public class StrategyAlert {
                 if(p.isCritica()){
                     return Alert.ATTIVO;
                 }
-                return Alert.RISOLTO;
+                return Alert.INATTIVO;
 
             } catch(Exception e){
-                System.out.println("Valore non valido");
-                return null;
+                System.out.println("Controllare se non si è inserito l'intero parametro");
+                return Alert.INATTIVO;
             }
 
         }
@@ -27,6 +27,7 @@ public class StrategyAlert {
         double altriValori = Double.parseDouble(valore);
         switch(tipo){
             case FREQUENZA_CARDIACA:
+
                 if(altriValori > 100 ||  altriValori < 50){
                     return Alert.ATTIVO;
                 }

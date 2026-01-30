@@ -215,7 +215,7 @@ public class FacadeSingletonDB {
 			            TipiParametroVitale.valueOf(mDb.getTipoParametro()),
 			            mDb.getValore(),
 			            mDb.getDataMonitoraggio(),
-			            Alert.valueOf(mDb.getAlert()),
+			            //Alert.valueOf(mDb.getAlert()),
 			            mDb.getNote()
 			        );
         monitoraggio.setIdMonitoraggio(mDb.getIdMonitoraggio());
