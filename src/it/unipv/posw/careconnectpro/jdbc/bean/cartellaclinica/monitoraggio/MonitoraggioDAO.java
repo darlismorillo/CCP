@@ -89,7 +89,9 @@ private PersonaDAO personaDAO;
     }
 	
 	public List<MonitoraggioDB> selectMonitoraggioByAlertAttivo()	{
-		String query = "SELECT * FROM MONITORAGGI WHERE ALERT = 'ATTIVO'";
+		String query = "SELECT * " +
+                "FROM MONITORAGGI M JOIN UTENTI U ON M.ID_PAZIENTE = U.CODICE_FISCALE " +
+                "WHERE M.ALERT = 'ATTIVO' AND U.STATO = TRUE ";
 		
 		List<MonitoraggioDB> monitoraggi = new ArrayList<>();
 
@@ -109,11 +111,7 @@ private PersonaDAO personaDAO;
                             rs.getString("NOTE")
                     );
                     mDb.setIdMonitoraggio(rs.getInt("ID_MONITORAGGIO"));
-                    if( personaDAO.selectPersonaAttivaByCf(mDb.getIdPaziente())!= null){
-                        monitoraggi.add(mDb);
-                    } else {
-                        System.out.println("Persona non più attiva");
-                    }
+                    monitoraggi.add(mDb);
 	        }
 
 	    } catch (Exception e) {

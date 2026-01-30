@@ -106,7 +106,7 @@ public class PersonaDAO  implements IPersonaDAO {
     
     @Override
     public List<PersonaDB> selectPazienti()	{
-    		String query = "SELECT * FROM UTENTI WHERE RUOLO_UTENTE = 'PAZIENTE' ";
+    		String query = "SELECT * FROM UTENTI WHERE RUOLO_UTENTE = 'PAZIENTE' AND STATO = TRUE ";
     		
     		List<PersonaDB> pazienti = new ArrayList<>();
     		
