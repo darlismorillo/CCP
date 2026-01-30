@@ -18,7 +18,6 @@ public class StrategyAlert {
                 return Alert.INATTIVO;
 
             } catch(Exception e){
-                System.out.println("Controllare se non si è inserito l'intero parametro");
                 return Alert.INATTIVO;
             }
 
