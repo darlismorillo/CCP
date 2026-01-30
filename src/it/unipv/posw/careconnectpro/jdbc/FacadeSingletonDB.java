@@ -16,9 +16,9 @@ import it.unipv.posw.careconnectpro.jdbc.bean.persona.IPersonaDAO;
 import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDAO;
 import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDB;
 import it.unipv.posw.careconnectpro.model.cartellaclinica.CartellaClinica;
-import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Alert;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.alert.Alert;
 import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Monitoraggio;
-import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.TipiParametroVitale;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.paramentroVitale.TipiParametroVitale;
 import it.unipv.posw.careconnectpro.model.cartellaclinica.terapia.Terapia;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 import it.unipv.posw.careconnectpro.model.persona.Persona;
@@ -196,7 +196,7 @@ public class FacadeSingletonDB {
 	    			m.getTipiParametroVitale().name(),
 	    			m.getValore(),
 	    			m.getDataMonitoraggio(),
-	    			m.getAlert().name(),
+	    			//m.getAlert().name(),
 	    			m.getNote()
 	    			);
 	    	return monitoraggioDAO.insertMonitoraggio(db);
@@ -250,7 +250,7 @@ public class FacadeSingletonDB {
     	            m.getTipiParametroVitale().name(),
     	            m.getValore(),
     	            m.getDataMonitoraggio(),
-    	            m.getAlert().name(),
+    	           // m.getAlert().name(),
     	            m.getNote()
     	    );
     	    mDb.setIdMonitoraggio(m.getIdMonitoraggio());

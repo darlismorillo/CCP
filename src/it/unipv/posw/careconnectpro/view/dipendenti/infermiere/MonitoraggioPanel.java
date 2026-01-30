@@ -1,8 +1,7 @@
 package it.unipv.posw.careconnectpro.view.dipendenti.infermiere;
 
-import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Alert;
-import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.TipiParametroVitale;
-import it.unipv.posw.careconnectpro.model.cartellaclinica.terapia.TipoSomministrazione;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.alert.Alert;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.paramentroVitale.TipiParametroVitale;
 
 import javax.swing.*;
 import java.awt.*;
