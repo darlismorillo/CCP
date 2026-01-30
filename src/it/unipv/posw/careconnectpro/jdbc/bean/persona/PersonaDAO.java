@@ -91,7 +91,9 @@ public class PersonaDAO  implements IPersonaDAO {
 	    						rs.getString("PASSWORD_UTENTE"),
 	    						rs.getString("RUOLO_UTENTE"),
 	    						rs.getDate("DATA_INIZIO").toLocalDate()
-	    						);
+                        );
+                        rs.getInt("STATO");
+                        pDb.setStato(rs.getInt("STATO"));
 	    			}
 	    		}
 	    	} catch (Exception e) {

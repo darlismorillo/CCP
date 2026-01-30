@@ -125,7 +125,9 @@ public class FacadeSingletonDB {
 		            pDb.getNumeroTelefonico(),
 		            pDb.getDataInizio()		           
 		        );
+
 		paziente.setIdPaziente(pDb.getIdPersona());
+        paziente.setStato(pDb.getStato());
 		return paziente;  
     }
     
@@ -196,7 +198,7 @@ public class FacadeSingletonDB {
 	    			m.getTipiParametroVitale().name(),
 	    			m.getValore(),
 	    			m.getDataMonitoraggio(),
-	    			//m.getAlert().name(),
+	    			m.getAlert().name(),
 	    			m.getNote()
 	    			);
 	    	return monitoraggioDAO.insertMonitoraggio(db);
@@ -219,6 +221,7 @@ public class FacadeSingletonDB {
 			            mDb.getNote()
 			        );
         monitoraggio.setIdMonitoraggio(mDb.getIdMonitoraggio());
+        monitoraggio.setAlert(Alert.valueOf(mDb.getAlert()));
         return monitoraggio;      
     }
 
@@ -250,7 +253,7 @@ public class FacadeSingletonDB {
     	            m.getTipiParametroVitale().name(),
     	            m.getValore(),
     	            m.getDataMonitoraggio(),
-    	           // m.getAlert().name(),
+    	            m.getAlert().name(),
     	            m.getNote()
     	    );
     	    mDb.setIdMonitoraggio(m.getIdMonitoraggio());

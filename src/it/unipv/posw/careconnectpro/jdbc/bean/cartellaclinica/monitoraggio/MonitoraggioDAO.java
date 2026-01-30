@@ -10,10 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unipv.posw.careconnectpro.jdbc.ConnessioneDB;
+import it.unipv.posw.careconnectpro.jdbc.bean.persona.PersonaDAO;
 
 public class MonitoraggioDAO implements IMonitoraggioDAO {
+private PersonaDAO personaDAO;
 
 	public MonitoraggioDAO() {
+        personaDAO = new PersonaDAO();
 	}
 	
 	@Override
@@ -68,7 +71,7 @@ public class MonitoraggioDAO implements IMonitoraggioDAO {
                              rs.getString("TIPO_PARAMETRO"),
                              rs.getString("VALORE"),
                              rs.getDate("DATA_MONITORAGGIO").toLocalDate(),
-                             //rs.getString("ALERT"),
+                             rs.getString("ALERT"),
                              rs.getString("NOTE")
                      );
                      mDb.setIdMonitoraggio(rs.getInt("ID_MONITORAGGIO"));
@@ -94,19 +97,25 @@ public class MonitoraggioDAO implements IMonitoraggioDAO {
 	         PreparedStatement ps = conn.prepareStatement(query);
 	         ResultSet rs = ps.executeQuery()) {
 	        while (rs.next()) {
-	            MonitoraggioDB mDb = new MonitoraggioDB(
-	                rs.getInt("ID_CARTELLA_CLINICA"),
-	                rs.getString("ID_PAZIENTE"),
-	                rs.getString("ID_INFERMIERE"),
-	                rs.getString("TIPO_PARAMETRO"),
-	                rs.getString("VALORE"),
-	                rs.getDate("DATA_MONITORAGGIO").toLocalDate(),
-	                //rs.getString("ALERT"),
-	                rs.getString("NOTE")
-	            );
-	            mDb.setIdMonitoraggio(rs.getInt("ID_MONITORAGGIO"));
-	            monitoraggi.add(mDb);
+
+                    MonitoraggioDB mDb = new MonitoraggioDB(
+                            rs.getInt("ID_CARTELLA_CLINICA"),
+                            rs.getString("ID_PAZIENTE"),
+                            rs.getString("ID_INFERMIERE"),
+                            rs.getString("TIPO_PARAMETRO"),
+                            rs.getString("VALORE"),
+                            rs.getDate("DATA_MONITORAGGIO").toLocalDate(),
+                            rs.getString("ALERT"),
+                            rs.getString("NOTE")
+                    );
+                    mDb.setIdMonitoraggio(rs.getInt("ID_MONITORAGGIO"));
+                    if( personaDAO.selectPersonaAttivaByCf(mDb.getIdPaziente())!= null){
+                        monitoraggi.add(mDb);
+                    } else {
+                        System.out.println("Persona non più attiva");
+                    }
 	        }
+
 	    } catch (Exception e) {
 	        throw new RuntimeException(e);
 	    }

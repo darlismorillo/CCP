@@ -83,6 +83,7 @@ public class AddMonitoraggioController {
 
     public Alert verificaIstantanea(TipiParametroVitale tipo, String valore){
         if(valore == null || valore.isEmpty()){
+            view.getMonitoraggioPanel().getAlertField().setText(null);
             PopUp.infoBox("Valore non valido", "Errore");
             return null;
         }
