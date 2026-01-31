@@ -1,7 +1,6 @@
-import it.unipv.posw.careconnectpro.jdbc.FacadeSingletonDB;
+
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
 import it.unipv.posw.careconnectpro.model.rsa.RSAService;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,20 +13,16 @@ public class RSAServiceTest {
 
     private RSAService rsaService;
     private Paziente paziente;
-    private FacadeSingletonDB facade;
+    
 
     @Before
     public void setup(){
         rsaService = new RSAService();
         paziente = new Paziente("CFTEST", "NOME", "COGNOME", LocalDate.of(1980, 6,22), "mail@test",
-                                 "3291234567", null ,LocalDate.now());
+                                 "3291234567", LocalDate.now());
 
     }
 
-    @After
-    public void tearDown(){
-        rsaService.rimuoviUtente(paziente);
-    }
 
     @Test
     public void registrazionePazienteCC(){

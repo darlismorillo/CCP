@@ -41,13 +41,5 @@ public class ProxyTest {
        System.out.println("True: registrato con successo, False: registrazione fallita --> risulalto = " + risultato);
    }
 
-    @Test
-    public void deleteTest(){
-        ProxyRSA proxyRSA = new ProxyRSA(amministratore);
-
-        proxyRSA.rimuoviUtente(medico.getCodiceFiscale());
-        proxyRSA.rimuoviUtente(dipendenteNuovo.getCodiceFiscale());
-
-    }
 }
 

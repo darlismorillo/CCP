@@ -1,0 +1,210 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+package "Persona" <<Folder>> {
+
+abstract class Persona {
+- TipoUtente tipoUtente
+- String codiceFiscale
+- String nome
+- String cognome;
+- LocalDate dataNascita, dataInizio
+- String email
+- String cellulare
+- String password
++ getters - setters ()
+}
+
+enum TipoUtente{
+PAZIENTE
+MEDICO
+AMMINISTRATORE
+INFERMIERE
+
+}
+
+class Paziente {
++getIdPaziente()
++setIdPaziente (int idPaziente)
+}
+package "Dipendenti" <<Folder>> {
+
+class Dipendente{
+    + setPassword()
+    }
+
+class Infermiere {
+- TipoUtente TipoUtente.Infermiere
+}
+
+class Amministratore {
+- TipoUtente TipoUtente.Amministratore
+}
+
+class Medico {
+- TipoUtente TipoUtente.Medico
+}
+
+class FactoryDipendente << (F,#FFF2CC) Factory >>{
++ Dipendente getDipendente()
+}
+}
+' Fine Dipendente
+
+}
+
+package "rsa" <<Folder>> {
+
+class IRSA << (I, #B3E5FC) interface>>{
+boolean registraUtente(Persona p)
+boolean disattivaUtente(String cf)
+int creaCartellaClinica(CartellaClinica cc)
+int creaTerapia(Terapia t)
+int creaMonitoraggio(Monitoraggio m)
+List<Monitoraggio> getMonitoraggiConAlertAttivo()
+boolean risolviAlertMonitoraggio(Monitoraggio m)
+Monitoraggio cercaMonitoraggioById(int id)
+Persona getUtenteLoggato()
+Dipendente cercaDipendenteByCf(String cf)
+Paziente cercaPazienteByCf(String cf)
+CartellaClinica cercaCartellaClinicaByCf(String cf)
+List<Paziente> cercaPazienti()
+}
+
+class RSAService{
+- Dipendente utenteLoggato
+- FacadeSingleton DB facadeDB
++ login()
++ getters and setters ()
+}
+
+class ProxyRSA {
+- RSAService rsa
+- Persona utenteLoggato
+}
+
+}
+' Fine package rsa
+
+package cartellaClinica <<Folder>>{
+
+class CartellaClinica {
+- String idPaziente
+- LocalDate dataCreazione
+- Persona paziente
+- List<Monitoraggio> monitoraggi
+- int idCartellaClinica
++ void addMonitoraggio(Monitoraggio m)
++ getters and setters ()
+}
+
+package monitoraggio <<Folder >>{
+class Monitoraggio {
+- CartellaClinica cartellaClinica
+- Paziente paziente
+- Dipendente infermiere
+- TipoParametroVitale tipiParametroVitale
+- String valore
+- LocalDate dataMonitoraggio
+- Alert alert
+- String note_
++ getters and setters ()
+}
+
+package alert <<Folder>>{
+
+enum Alert{
+ATTIVO
+INATTIVO
+RISOLTO
+}
+
+class StrategyAlert{
+- Pressione p
++ Alert controlla (TipiParametroVitale tipo, String valore)
+}
+
+}
+' Fine package alert
+
+package parametroVitale{
+
+enum TipiParametroVitale{
+FREQUENZA_CARDIACA
+PRESSIONE_ARTERIOSA
+SATURAZIONE
+TEMPERATURA
+}
+
+class Pressione{
+ - int [] pressione;
+ - int sistolica, diastolica;
+ + boolean isCritica()
+ + getters ()
+}
+
+}
+'Fine package parametroVi
+
+}
+' Fine package monitoraggio
+
+package terapia{
+
+class Terapia{
+- CartellaClinica cartellaClinica;
+- Paziente paziente;
+- Dipendente medico;
+- TipoSomministrazione tipoSomministrazione;
+- String nomeFarmaco;
+- String materiale;
+- String dosaggio;
+- int frequenzaGiornaliera;
+- StatoTerapia stato;
+- int durata;
+- LocalDate dataInizio;
+- LocalDate dataFine;
+- String note_;
++ getters and setters()
+}
+
+enum StatoTerapia{
+PREVISTA
+ESEGUITA
+NON_ESEGUITA
+}
+
+enum TipoSomministrazione{
+FARMACO_ORALE
+FARMACO_ENDOVENOSA
+FARMACO_INTRAMUSCOLARE
+MEDICAZIONE
+FISIOTERAPIA;
+}
+
+}
+'Fine package terapia
+
+}
+' Fine package cartellaclinica
+
+
+' Relazioni
+Persona *-- TipoUtente
+Persona <|--  Dipendente
+Persona <|-- Paziente
+Dipendente <|-- Infermiere
+Dipendente <|-- Medico
+Dipendente <|-- Amministratore
+IRSA <|.. RSAService
+IRSA <|.. ProxyRSA
+CartellaClinica *-- Monitoraggio
+Monitoraggio o-- Paziente
+Monitoraggio o-- Dipendente
+ProxyRSA o-- RSAService
+FactoryDipendente ..> Dipendente
+Monitoraggio ..> StrategyAlert
+
+
+@enduml

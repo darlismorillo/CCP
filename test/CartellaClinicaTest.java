@@ -1,6 +1,5 @@
 import it.unipv.posw.careconnectpro.model.cartellaclinica.CartellaClinica;
 import it.unipv.posw.careconnectpro.model.persona.Paziente;
-import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 import org.junit.Before;
 import  org.junit.Test;
 
@@ -20,12 +19,10 @@ public class CartellaClinicaTest {
         // Date
         LocalDate dataNascita = LocalDate.of(1985, 8, 10);
         LocalDate dataAssunzione = LocalDate.of(2023, 5, 15);
-
         // Recapiti e credenziali
         String email = "f.barbieri85@provider.it";
         String cellulare = "3479876543";
-        String id = "PAZ-99";
-        String password = null;
+
 
         // Creazione dell'oggetto Paziente
         paziente = new Paziente(
@@ -35,14 +32,13 @@ public class CartellaClinicaTest {
                 dataNascita,
                 email,
                 cellulare,
-                password,
                 dataAssunzione
         );
     }
 
     @Test
     public void creazioneCartella(){
-        CartellaClinica c = new CartellaClinica(paziente);
+        new CartellaClinica(paziente);
 
 
     }

@@ -15,7 +15,7 @@ import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 public class RSAService implements IRSA {
 	
     private final FacadeSingletonDB facadeDB;
-    private Dipendente utenteLoggato= null;
+    private Dipendente utenteLoggato = null;
     
     public RSAService() {
         facadeDB = FacadeSingletonDB.getIstanza();

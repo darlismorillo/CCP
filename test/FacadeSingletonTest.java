@@ -20,14 +20,14 @@ public class FacadeSingletonTest {
         facadeDB = FacadeSingletonDB.getIstanza();
         pazienteTest= new Paziente("TestCF", "NomeT", "CognomeT",
                                     LocalDate.of(1999, 3,1), "mail@test","3121234567",
-                                    null, LocalDate.now());
+                        LocalDate.now());
 
     }
 
     @After
     public void tearDown(){
         facadeDB.deletePersona(pazienteTest);
-        facadeDB.deleteCartellaClinica(pazienteTest.getCodiceFiscale());
+
     }
 
     @Test
