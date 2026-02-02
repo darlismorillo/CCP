@@ -1,0 +1,46 @@
+@startuml
+
+actor Utente
+participant LoginPanel
+participant UtentePanel
+participant FacadeController
+participant RSAService
+participant Dipendente
+participant FacadeSingletonDB
+database MySQL
+
+Utente --> LoginPanel
+activate LoginPanel
+
+
+LoginPanel --> FacadeController : inserisci cf\ninserisci pw
+activate FacadeController
+
+FacadeController --> RSAService : loginController()
+activate RSAService
+
+RSAService -->  Dipendente : login()
+activate Dipendente
+Dipendente --> FacadeSingletonDB
+activate FacadeSingletonDB
+FacadeSingletonDB --> MySQL : findDipendenteByCf()
+MySQL --> FacadeSingletonDB
+FacadeSingletonDB --> Dipendente
+deactivate FacadeSingletonDB
+Dipendente --> RSAService
+deactivate  Dipendente
+RSAService --> FacadeController
+deactivate  RSAService
+FacadeController --> LoginPanel : setVisibile(false)
+
+FacadeController --> UtentePanel : setVisibile(true)
+deactivate LoginPanel
+deactivate FacadeController
+activate UtentePanel
+
+
+
+
+
+
+@enduml
