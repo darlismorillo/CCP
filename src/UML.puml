@@ -1,7 +1,12 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-package "model" <<Folder>>{
+skinparam ranksep 150
+skinparam nodesep 100
+left to right direction
+
+
+package "model" <<Folder>> as M {
 
 package "Persona" <<Folder>> {
 
@@ -17,6 +22,8 @@ abstract class Persona {
 + getters - setters ()
 }
 
+
+
 enum TipoUtente{
 PAZIENTE
 MEDICO
@@ -29,6 +36,7 @@ class Paziente {
 +getIdPaziente()
 +setIdPaziente (int idPaziente)
 }
+
 package "Dipendenti" <<Folder>> {
 
 class Dipendente{
@@ -53,49 +61,18 @@ class FactoryDipendente << (F,#FFF2CC) Factory >>{
 }
 ' Fine Dipendente
 
-Persona *-- TipoUtente
+Persona -- TipoUtente
 Persona <|--  Dipendente
 Persona <|-- Paziente
 Dipendente <|-- Infermiere
 Dipendente <|-- Medico
 Dipendente <|-- Amministratore
 
-}
 
-package "rsa" <<Folder>> {
-
-class IRSA << (I, #B3E5FC) interface>>{
-boolean registraUtente(Persona p)
-boolean disattivaUtente(String cf)
-int creaCartellaClinica(CartellaClinica cc)
-int creaTerapia(Terapia t)
-int creaMonitoraggio(Monitoraggio m)
-List<Monitoraggio> getMonitoraggiConAlertAttivo()
-boolean risolviAlertMonitoraggio(Monitoraggio m)
-Monitoraggio cercaMonitoraggioById(int id)
-Persona getUtenteLoggato()
-Dipendente cercaDipendenteByCf(String cf)
-Paziente cercaPazienteByCf(String cf)
-CartellaClinica cercaCartellaClinicaByCf(String cf)
-List<Paziente> cercaPazienti()
-}
-
-class RSAService{
-- Dipendente utenteLoggato
-- FacadeSingleton DB facadeDB
-+ login()
-+ getters and setters ()
-}
-
-class ProxyRSA {
-- RSAService rsa
-- Persona utenteLoggato
-}
 
 }
-' Fine package rsa
+package "cartellaClinica" <<Folder>>{
 
-package cartellaClinica <<Folder>>{
 
 class CartellaClinica {
 - String idPaziente
@@ -107,7 +84,9 @@ class CartellaClinica {
 + getters and setters ()
 }
 
-package monitoraggio <<Folder >>{
+CartellaClinica o-- "terapia"
+
+package "monitoraggio" <<Folder >>{
 class Monitoraggio {
 - CartellaClinica cartellaClinica
 - Paziente paziente
@@ -145,26 +124,19 @@ SATURAZIONE
 TEMPERATURA
 }
 
-class Pressione{
- - int [] pressione;
- - int sistolica, diastolica;
- + boolean isCritica()
- + getters ()
-}
-
 }
 'Fine package parametroVi
 
 }
 ' Fine package monitoraggio
 
-package terapia{
+package "terapia" {
 
 class Terapia{
 - CartellaClinica cartellaClinica;
 - Paziente paziente;
 - Dipendente medico;
-- TipoSomministrazione tipoSomministrazione;
+- TipiSomministrazione tipiSomministrazione;
 - String nomeFarmaco;
 - String materiale;
 - String dosaggio;
@@ -177,13 +149,14 @@ class Terapia{
 + getters and setters()
 }
 
+
 enum StatoTerapia{
 PREVISTA
 ESEGUITA
 NON_ESEGUITA
 }
 
-enum TipoSomministrazione{
+enum TipiSomministrazione{
 FARMACO_ORALE
 FARMACO_ENDOVENOSA
 FARMACO_INTRAMUSCOLARE
@@ -191,23 +164,71 @@ MEDICAZIONE
 FISIOTERAPIA;
 }
 
-}
-'Fine package terapia
-IRSA <|.. RSAService
-IRSA <|.. ProxyRSA
-CartellaClinica *-- Monitoraggio
-Monitoraggio o-- Paziente
-Monitoraggio o-- Dipendente
-ProxyRSA o-- RSAService
+' RELAZIONI
+Terapia -- StatoTerapia
+Terapia -- TipiSomministrazione
+CartellaClinica o-- "monitoraggio"
+
+Monitoraggio *-- Alert
+StrategyAlert *-- Alert
+Monitoraggio -- TipiParametroVitale
+
 FactoryDipendente ..> Dipendente
 Monitoraggio ..> StrategyAlert
 }
+'Fine package terapia
+
+
+
+
+}
 ' Fine package cartellaclinica
+"cartellaClinica" -- "Persona"
+
+package "rsa" <<Folder>> {
+
+class IRSA << (I, #B3E5FC) interface>>{
+boolean registraUtente(Persona p)
+boolean disattivaUtente(String cf)
+int creaCartellaClinica(CartellaClinica cc)
+int creaTerapia(Terapia t)
+int creaMonitoraggio(Monitoraggio m)
+List<Monitoraggio> getMonitoraggiConAlertAttivo()
+boolean risolviAlertMonitoraggio(Monitoraggio m)
+Monitoraggio cercaMonitoraggioById(int id)
+Persona getUtenteLoggato()
+Dipendente cercaDipendenteByCf(String cf)
+Paziente cercaPazienteByCf(String cf)
+CartellaClinica cercaCartellaClinicaByCf(String cf)
+List<Paziente> cercaPazienti()
+}
+
+class RSAService{
+- Dipendente utenteLoggato
+- FacadeSingleton DB facadeDB
++ login()
++ getters and setters ()
+}
+
+class ProxyRSA {
+- RSAService rsa
+- Persona utenteLoggato
+}
+
+IRSA <|.. RSAService
+IRSA <|.. ProxyRSA
+ProxyRSA o-- RSAService
+}
+' Fine package rsa
+"rsa" -- "cartellaClinica"
+"rsa" -- "Persona"
+
 
 }
 'Fine package model
 
-package "jdbc" {
+
+package "jdbc" <<Folder>> as DAO {
 
 class ConnessioneDB {
 - {static} ConnessioneDB instance
@@ -225,6 +246,8 @@ class FacadeSingletonDB  << (S,#FFF2CC) FacadeSingleton >> {
 - FacadeSingletonDB()
 + getters()
 }
+
+
 
 package "bean" {
 
@@ -294,12 +317,13 @@ package "bean" {
         }
        }
     }
+
+M -- FacadeSingletonDB
 FacadeSingletonDB --> ConnessioneDB
 ITerapiaDAO <|.. TerapiaDAO
 TerapiaDAO ..> TerapiaDB
 IPersonaDAO <|.. PersonaDAO
 PersonaDAO ..> PersonaDB
-PersonaDAO --> ConnessioneDB
 ICartellaClinicaDAO <|.. CartellaClinicaDAO
 CartellaClinicaDAO ..> CartellaClinicaDB
 FacadeSingletonDB o-- IPersonaDAO
@@ -314,6 +338,52 @@ MonitoraggioDAO ..> MonitoraggioDB
 'Fine packag JDBC
 
 
+package "controller" <<Folder>> as C {
+        class FacadeController {
+            - LoginController loginController
+            - AmmController ammController
+            - MedController medController
+            - InfController infController
+        }
 
+}
+
+package "view" <<Folder>> as V {
+        class ViewController <<JFrame>> {
+        - LoginPanel loginPanel
+        - AmmPanel ammPanel
+        - MedPanel medPanel
+        - InfPanel infPanel
+        + getters and setters ()
+        }
+        class LoginPanel <<JPanel>>
+        class AmmPanel <<JPanel>>
+        class MedPanel <<JPanel>>
+        class InfPanel <<JPanel>>
+        class TerapiaPanel <<JPanel>>
+        class MonitoraggioPanel
+        class PopUp
+
+
+
+}
+
+FacadeController ---> RSAService
+FacadeController --> ViewController
+
+
+ViewController *--- LoginPanel
+ViewController *--- AmmPanel
+ViewController *--- MedPanel
+ViewController *--- InfPanel
+ViewController *--- TerapiaPanel
+
+
+
+
+
+
+DAO -[hidden]down- M
+M -[hidden]down- V
 
 @enduml
