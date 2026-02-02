@@ -64,9 +64,9 @@ class FactoryDipendente << (F,#FFF2CC) Factory >>{
 Persona -- TipoUtente
 Persona <|--  Dipendente
 Persona <|-- Paziente
-Dipendente <|-- Infermiere
-Dipendente <|-- Medico
-Dipendente <|-- Amministratore
+Dipendente <|--Infermiere
+Dipendente <|- Medico
+Dipendente <|-Amministratore
 
 
 
@@ -115,15 +115,11 @@ class StrategyAlert{
 }
 ' Fine package alert
 
-package parametroVitale{
-
 enum TipiParametroVitale{
 FREQUENZA_CARDIACA
 PRESSIONE_ARTERIOSA
 SATURAZIONE
 TEMPERATURA
-}
-
 }
 'Fine package parametroVi
 
@@ -183,7 +179,7 @@ Monitoraggio ..> StrategyAlert
 
 }
 ' Fine package cartellaclinica
-"cartellaClinica" -- "Persona"
+"cartellaClinica" --* "Persona"
 
 package "rsa" <<Folder>> {
 
@@ -217,12 +213,12 @@ class ProxyRSA {
 
 IRSA <|.. RSAService
 IRSA <|.. ProxyRSA
-ProxyRSA o-- RSAService
+ProxyRSA --* RSAService
 }
 ' Fine package rsa
-"rsa" -- "cartellaClinica"
-"rsa" -- "Persona"
-
+"rsa" <-- "cartellaClinica"
+"rsa" <-- "Persona"
+"rsa"-[hidden]down- "Persona"
 
 }
 'Fine package model
@@ -318,7 +314,7 @@ package "bean" {
        }
     }
 
-M -- FacadeSingletonDB
+M *-- FacadeSingletonDB
 FacadeSingletonDB --> ConnessioneDB
 ITerapiaDAO <|.. TerapiaDAO
 TerapiaDAO ..> TerapiaDB
@@ -326,10 +322,7 @@ IPersonaDAO <|.. PersonaDAO
 PersonaDAO ..> PersonaDB
 ICartellaClinicaDAO <|.. CartellaClinicaDAO
 CartellaClinicaDAO ..> CartellaClinicaDB
-FacadeSingletonDB o-- IPersonaDAO
-FacadeSingletonDB o-- ICartellaClinicaDAO
-FacadeSingletonDB o-- IMonitoraggioDAO
-FacadeSingletonDB o-- ITerapiaDAO
+FacadeSingletonDB o-- "bean"
 IMonitoraggioDAO <|.. MonitoraggioDAO
 MonitoraggioDAO ..> MonitoraggioDB
 
@@ -345,7 +338,9 @@ package "controller" <<Folder>> as C {
             - MedController medController
             - InfController infController
         }
+        interface ActionListener
 
+ActionListener <|.. FacadeController
 }
 
 package "view" <<Folder>> as V {
@@ -356,34 +351,25 @@ package "view" <<Folder>> as V {
         - InfPanel infPanel
         + getters and setters ()
         }
+
+        package "dipendete" {
         class LoginPanel <<JPanel>>
         class AmmPanel <<JPanel>>
         class MedPanel <<JPanel>>
         class InfPanel <<JPanel>>
-        class TerapiaPanel <<JPanel>>
-        class MonitoraggioPanel
-        class PopUp
-
-
-
+        }
+        metaclass Button <<metaclass>>
 }
 
-FacadeController ---> RSAService
-FacadeController --> ViewController
+C --> V
+ "rsa"<-- FacadeController
+Button o-- ViewController
+ViewController *-- LoginPanel
+ViewController *-- AmmPanel
+ViewController *-- MedPanel
+ViewController *-- InfPanel
 
 
-ViewController *--- LoginPanel
-ViewController *--- AmmPanel
-ViewController *--- MedPanel
-ViewController *--- InfPanel
-ViewController *--- TerapiaPanel
-
-
-
-
-
-
-DAO -[hidden]down- M
-M -[hidden]down- V
+'C -[hidden]down- M
 
 @enduml
