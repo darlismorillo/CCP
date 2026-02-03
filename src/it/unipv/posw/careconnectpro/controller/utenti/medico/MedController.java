@@ -14,7 +14,6 @@ public class MedController {
     private BtnMonitoraggioActionListener monitoraggioBtn;
     private MonitoraggioController monitoraggioController;
     private TerapiaController terapiaController;
-    private List<Monitoraggio> monitoraggiList;
 
 
 
@@ -27,8 +26,36 @@ public class MedController {
         monitoraggioController = new MonitoraggioController(model, view);
         terapiaController = new TerapiaController (model, view);
 
-
     }
 
-
+    public TerapiaController getTerapiaController() {
+        return terapiaController;
+    }
+    public void setTerapiaController(TerapiaController terapiaController) {
+        this.terapiaController = terapiaController;
+    }
+    public MonitoraggioController getMonitoraggioController() {
+        return monitoraggioController;
+    }
+    public void setMonitoraggioController(MonitoraggioController monitoraggioController) {
+        this.monitoraggioController = monitoraggioController;
+    }
+    public BtnMonitoraggioActionListener getMonitoraggioBtn() {
+        return monitoraggioBtn;
+    }
+    public void setMonitoraggioBtn(BtnMonitoraggioActionListener monitoraggioBtn) {
+        this.monitoraggioBtn = monitoraggioBtn;
+    }
+    public ViewController getView() {
+        return view;
+    }
+    public void setView(ViewController view) {
+        this.view = view;
+    }
+    public IRSA getModel() {
+        return model;
+    }
+    public void setModel(IRSA model) {
+        this.model = model;
+    }
 }

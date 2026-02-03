@@ -12,8 +12,7 @@ public class ListMonitoraggioPanel extends JPanel {
     private JTable monitoraggiList;
     private JButton terapiaButton, backButton, alertButton;
     private MonitoraggioTable monitoraggiTable;
-    private MonitoraggioController controller;
-    private IRSA model;
+    private IRSA rsa;
 
 
     public  ListMonitoraggioPanel()  {
@@ -22,8 +21,8 @@ public class ListMonitoraggioPanel extends JPanel {
         setVisible(true);
 
 
-        model = new RSAService();
-        monitoraggiTable = new MonitoraggioTable(model.getMonitoraggiConAlertAttivo());
+        rsa = new RSAService();
+        monitoraggiTable = new MonitoraggioTable(rsa.getMonitoraggiConAlertAttivo());
 
 
         monitoraggiList = new JTable(monitoraggiTable);

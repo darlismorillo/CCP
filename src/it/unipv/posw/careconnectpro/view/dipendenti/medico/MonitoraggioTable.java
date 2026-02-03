@@ -11,18 +11,12 @@ import java.util.List;
 public class MonitoraggioTable extends AbstractTableModel {
 
    List<Monitoraggio> monitoraggi;
-   private IRSA model;
    private final String[] columnNames = {"ID", "CC", "CF_PAZIENTE", "CF_INFERMIERE", "PARAMENTRO VITALE",
                                             "VALORE", "DATA", "ALERT", "NOTE"};
 
 
    public MonitoraggioTable(List <Monitoraggio> monitoraggi) {
        this.monitoraggi = monitoraggi;
-   }
-
-
-   private void setMonitoraggiList() {
-       this. monitoraggi = model.getMonitoraggiConAlertAttivo();
    }
 
    @Override

@@ -141,5 +141,10 @@ private PersonaDAO personaDAO;
 	}
 
 
-
+    public PersonaDAO getPersonaDAO() {
+        return personaDAO;
+    }
+    public void setPersonaDAO(PersonaDAO personaDAO) {
+        this.personaDAO = personaDAO;
+    }
 }

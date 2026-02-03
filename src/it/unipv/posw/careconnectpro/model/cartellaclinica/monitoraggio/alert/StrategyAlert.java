@@ -46,6 +46,7 @@ public class StrategyAlert {
                 return Alert.INATTIVO;
         }
 
+
         return null;
     }
 

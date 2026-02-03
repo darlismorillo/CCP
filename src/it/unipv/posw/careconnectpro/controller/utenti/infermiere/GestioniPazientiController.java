@@ -23,8 +23,21 @@ public class GestioniPazientiController {
         view.getGestionePazPanel().getInserisciButton().addActionListener(addMonitoraggio);
         view.getGestionePazPanel().getBackButton().addActionListener(indietroButton);
 
+    }
 
+    public ViewController getView() {
+        return view;
+    }
 
+    public void setView(ViewController view) {
+        this.view = view;
+    }
 
+    public IRSA getModel() {
+        return model;
+    }
+
+    public void setModel(IRSA model) {
+        this.model = model;
     }
 }

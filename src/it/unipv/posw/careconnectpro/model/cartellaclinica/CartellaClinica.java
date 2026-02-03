@@ -22,20 +22,13 @@ public class CartellaClinica {
         this.monitoraggi = new ArrayList<>();
     }
 
-    public void addMonitoraggi(Monitoraggio m){
-    		this.monitoraggi.add(m);
-    }
-    
     public List<Monitoraggio> getMonitoraggi() {
         return monitoraggi;
     }
     
     public void setMonitoraggi(List<Monitoraggio> monitoraggi) {this.monitoraggi = monitoraggi;}
 	
-    public void addMonitoraggio(Monitoraggio monitoraggio) {
-        this.monitoraggi.add(monitoraggio);
-    }
-    
+
     public int getIdCartellaClinica() {return idCartellaClinica;}
     public void setIdCartellaClinica(int idCartellaClinica) { this.idCartellaClinica = idCartellaClinica;}
     public String getIdPaziente() {return idPaziente;}

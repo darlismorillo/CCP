@@ -23,7 +23,36 @@ public class AmmController {
         view.getAmmPanel().getEliminaButton().addActionListener(eliminaUtente);
         regController = new RegistrazioneController(model, view);
 
-
     }
 
+    public IRSA getModel() {
+        return model;
+    }
+    public void setModel(IRSA model) {
+        this.model = model;
+    }
+    public ViewController getView() {
+        return view;
+    }
+    public void setView(ViewController view) {
+        this.view = view;
+    }
+    public BtnRegistraUtenteActionListener getBtnRegistrazione() {
+        return btnRegistrazione;
+    }
+    public void setBtnRegistrazione(BtnRegistraUtenteActionListener btnRegistrazione) {
+        this.btnRegistrazione = btnRegistrazione;
+    }
+    public RegistrazioneController getRegController() {
+        return regController;
+    }
+    public void setRegController(RegistrazioneController regController) {
+        this.regController = regController;
+    }
+    public DisattivaUtenteActionListener getEliminaUtente() {
+        return eliminaUtente;
+    }
+    public void setEliminaUtente(DisattivaUtenteActionListener eliminaUtente) {
+        this.eliminaUtente = eliminaUtente;
+    }
 }

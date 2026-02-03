@@ -1,0 +1,36 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+actor Medico
+participant MedPanel
+participant ListMonitoraggioPanel
+participant FacadeController
+participant RSAService
+participant Terapia
+participant FacadeSingletonDB
+database MySQL
+
+Medico --> MedPanel
+activate MedPanel
+MedPanel --> ListMonitoraggioPanel : setVisible(true)
+deactivate MedPanel
+activate ListMonitoraggioPanel
+ListMonitoraggioPanel --> FacadeController : addTerapia()
+deactivate ListMonitoraggioPanel
+activate FacadeController
+FacadeController --> RSAService
+deactivate FacadeController
+activate RSAService
+RSAService --> Terapia : creaTerapia()
+deactivate RSAService
+activate Terapia
+Terapia --> FacadeSingletonDB
+deactivate Terapia
+activate FacadeSingletonDB
+FacadeSingletonDB --> MySQL : insertTerapia()\n updateAlertMonitoraggio()
+deactivate FacadeSingletonDB
+
+
+
+
+
+@enduml

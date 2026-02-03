@@ -10,7 +10,6 @@ public class InfController {
 
     private IRSA model;
     private ViewController view;
-
     private GestioniPazientiController gestioneController;
     private AddMonitoraggioController addMonitoraggioController;
     private BtnOpenActionListener btnOpenActionListener;
@@ -27,10 +26,36 @@ public class InfController {
         view.getInfPanel().getMonitoraggioButton().addActionListener(btnOpenActionListener);
 
 
-
-
     }
 
-
-
+    public IRSA getModel() {
+        return model;
+    }
+    public void setModel(IRSA model) {
+        this.model = model;
+    }
+    public ViewController getView() {
+        return view;
+    }
+    public void setView(ViewController view) {
+        this.view = view;
+    }
+    public GestioniPazientiController getGestioneController() {
+        return gestioneController;
+    }
+    public void setGestioneController(GestioniPazientiController gestioneController) {
+        this.gestioneController = gestioneController;
+    }
+    public AddMonitoraggioController getAddMonitoraggioController() {
+        return addMonitoraggioController;
+    }
+    public void setAddMonitoraggioController(AddMonitoraggioController addMonitoraggioController) {
+        this.addMonitoraggioController = addMonitoraggioController;
+    }
+    public BtnOpenActionListener getBtnOpenActionListener() {
+        return btnOpenActionListener;
+    }
+    public void setBtnOpenActionListener(BtnOpenActionListener btnOpenActionListener) {
+        this.btnOpenActionListener = btnOpenActionListener;
+    }
 }
