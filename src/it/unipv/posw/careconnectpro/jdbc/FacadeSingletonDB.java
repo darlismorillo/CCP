@@ -33,7 +33,7 @@ public class FacadeSingletonDB {
     private ITerapiaDAO terapiaDAO;
     private IMonitoraggioDAO monitoraggioDAO;
 
-    public FacadeSingletonDB() {
+    private FacadeSingletonDB() {
         personaDAO = new PersonaDAO();
         cartellaClinicaDAO = new CartellaClinicaDAO();
         terapiaDAO = new TerapiaDAO();
@@ -217,7 +217,6 @@ public class FacadeSingletonDB {
 			            TipiParametroVitale.valueOf(mDb.getTipoParametro()),
 			            mDb.getValore(),
 			            mDb.getDataMonitoraggio(),
-			            //Alert.valueOf(mDb.getAlert()),
 			            mDb.getNote()
 			        );
         monitoraggio.setIdMonitoraggio(mDb.getIdMonitoraggio());
@@ -259,7 +258,6 @@ public class FacadeSingletonDB {
     	    mDb.setIdMonitoraggio(m.getIdMonitoraggio());
     	    return monitoraggioDAO.updateAlertMonitoraggio(mDb);
     	}
-
 
 }
 
