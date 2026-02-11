@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class LoginPanel extends JPanel {
-
-    private JLabel cfLabel, passwordLabel;
+    
+	private static final long serialVersionUID = 1L;
+	
+	private JLabel cfLabel, passwordLabel;
     private JTextField cfField;
     private JPasswordField passwordField;
     private JButton loginButton;
@@ -29,11 +31,6 @@ public class LoginPanel extends JPanel {
         cfLabel.setFont(mediumFont);
         passwordLabel.setFont(mediumFont);
         loginButton.setFont(largeFont);
-//        loginButton.setContentAreaFilled(true);
-//        loginButton.setOpaque(true);
-//        loginButton.setBackground(new Color(173, 216, 230));
-//        loginButton.setBorderPainted(false);
-
 
         add(cfLabel);
         add(cfField);

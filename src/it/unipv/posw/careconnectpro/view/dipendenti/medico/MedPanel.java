@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MedPanel extends JPanel {
-    private JButton logoutButton, openButton;
+	
+    private static final long serialVersionUID = 1L;
+    
+	private JButton logoutButton, openButton;
 
 
     public MedPanel() {
@@ -13,7 +16,7 @@ public class MedPanel extends JPanel {
 
         logoutButton = new JButton("Logout");
         logoutButton.setFont(mediumFont);
-        openButton = new JButton("Monitoraggio Alert");
+        openButton = new JButton("Visualizza Monitoraggi");
         openButton.setFont(mediumFont);
 
         add(openButton);

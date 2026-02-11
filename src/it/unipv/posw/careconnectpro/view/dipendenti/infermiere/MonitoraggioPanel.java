@@ -7,7 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MonitoraggioPanel extends JPanel {
-    private JLabel idCartellaLabel, cfPazienteLabel, idInfermiereLabel, parametriLabel,
+	
+    private static final long serialVersionUID = 1L;
+
+	private JLabel idCartellaLabel, cfPazienteLabel, idInfermiereLabel, parametriLabel,
                     valoreLabel, dataLabel, alertLabel, noteLabel;
 
     private JTextField idCartellaField,  cfPazienteField, idInfermiereField, valoreFiel, dataFiel, noteFiel, alertField;
@@ -41,7 +44,6 @@ public class MonitoraggioPanel extends JPanel {
         alertLabel = new JLabel("Alert del monitoraggio");
         alertField = new JTextField();
         alertField.setEditable(false);
-        //alertBox = new JComboBox<>(Alert.values());
         noteLabel = new JLabel("Note");
         noteFiel = new JTextField();
         confermaButton = new JButton("Conferma");

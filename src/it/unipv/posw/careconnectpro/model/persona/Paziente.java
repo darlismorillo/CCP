@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Paziente extends Persona {
 	
-	private int idPaziente, stato;
+	private int idPaziente;
 
     public Paziente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,
                     String cellulare, LocalDate dataInizio) {

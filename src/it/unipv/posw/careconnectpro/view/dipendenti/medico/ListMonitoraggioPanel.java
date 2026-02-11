@@ -1,18 +1,19 @@
 package it.unipv.posw.careconnectpro.view.dipendenti.medico;
 
-import it.unipv.posw.careconnectpro.controller.utenti.medico.MonitoraggioController;
-import it.unipv.posw.careconnectpro.model.rsa.IRSA;
-import it.unipv.posw.careconnectpro.model.rsa.RSAService;
+import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Monitoraggio;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListMonitoraggioPanel extends JPanel {
 
-    private JTable monitoraggiList;
+    private static final long serialVersionUID = 1L;
+    
+	private JTable monitoraggiList;
     private JButton terapiaButton, backButton, alertButton;
     private MonitoraggioTable monitoraggiTable;
-    private IRSA rsa;
 
 
     public  ListMonitoraggioPanel()  {
@@ -20,10 +21,7 @@ public class ListMonitoraggioPanel extends JPanel {
         Font largeFont = new Font("Arial", 0, 20);
         setVisible(true);
 
-
-        rsa = new RSAService();
-        monitoraggiTable = new MonitoraggioTable(rsa.getMonitoraggiConAlertAttivo());
-
+        monitoraggiTable = new MonitoraggioTable(new ArrayList<Monitoraggio>());
 
         monitoraggiList = new JTable(monitoraggiTable);
         monitoraggiList.setFont(mediumFont);
@@ -81,4 +79,13 @@ public class ListMonitoraggioPanel extends JPanel {
     public JTable getMonitoraggiList() {
         return monitoraggiList;
     }
+    
+    public void setTabellaMonitoraggi(List<Monitoraggio> cercaMonitoraggio) {
+		if (cercaMonitoraggio == null) {
+			cercaMonitoraggio = new ArrayList<Monitoraggio>();
+		} 
+		this.monitoraggiTable= new MonitoraggioTable(cercaMonitoraggio);
+		this.monitoraggiList.setModel(monitoraggiTable);
+		
+	}
 }

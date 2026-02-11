@@ -1,0 +1,226 @@
+Index: src/it/unipv/posw/careconnectpro/model/rsa/ProxyRSA.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.unipv.posw.careconnectpro.model.rsa;\n\n\nimport it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;\nimport it.unipv.posw.careconnectpro.model.persona.dipendente.TipoDipendente;\n\npublic class ProxyRSA implements IResidenzaSanitariaAssistenziale {\n\n    private final ResidenzaSanitariaAssistenziale rsa;\n    private final Dipendente utenteLoggato;\n    private static final TipoDipendente autorizzato = TipoDipendente.AMMINISTRATORE;\n\n    public ProxyRSA(Dipendente amministratore) {\n        this.utenteLoggato = amministratore;\n        this.rsa = new ResidenzaSanitariaAssistenziale();\n    }\n\n    @Override\n    public boolean registrazioneDipendente(Dipendente dipendente) {\n        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == autorizzato) {\n            return rsa.registrazioneDipendente(dipendente);\n        }\n        System.out.println(\"Solo gli amministratori possono registrare nuovi dipendenti\");\n        return false;\n    }\n\n    @Override\n    public Dipendente loginDipendente(String cf, String password) {\n        return rsa.loginDipendente(cf, password);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/it/unipv/posw/careconnectpro/model/rsa/ProxyRSA.java b/src/it/unipv/posw/careconnectpro/model/rsa/ProxyRSA.java
+--- a/src/it/unipv/posw/careconnectpro/model/rsa/ProxyRSA.java	(revision 891594e03db67e583eb511644c237fc1df981a2f)
++++ b/src/it/unipv/posw/careconnectpro/model/rsa/ProxyRSA.java	(date 1768562385761)
+@@ -6,26 +6,28 @@
+ 
+ public class ProxyRSA implements IResidenzaSanitariaAssistenziale {
+ 
+-    private final ResidenzaSanitariaAssistenziale rsa;
++    private final IResidenzaSanitariaAssistenziale rsa;
+     private final Dipendente utenteLoggato;
+-    private static final TipoDipendente autorizzato = TipoDipendente.AMMINISTRATORE;
+ 
+-    public ProxyRSA(Dipendente amministratore) {
+-        this.utenteLoggato = amministratore;
+-        this.rsa = new ResidenzaSanitariaAssistenziale();
++    public ProxyRSA(Dipendente utenteLoggato, IResidenzaSanitariaAssistenziale rsa) {
++        this.utenteLoggato = utenteLoggato;
++        this.rsa = rsa;
+     }
+ 
+     @Override
+     public boolean registrazioneDipendente(Dipendente dipendente) {
+-        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == autorizzato) {
++        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == TipoDipendente.AMMINISTRATORE) {
+             return rsa.registrazioneDipendente(dipendente);
+         }
+-        System.out.println("Solo gli amministratori possono registrare nuovi dipendenti");
+-        return false;
++        throw new RuntimeException("Solo gli amministratori possono registrare nuovi dipendenti");
+     }
+-
++    
+     @Override
+-    public Dipendente loginDipendente(String cf, String password) {
+-        return rsa.loginDipendente(cf, password);
++    public boolean rimuoviDipendente(String idDipendente)	{
++        if(utenteLoggato != null  && utenteLoggato.getTipoDipendente() == TipoDipendente.AMMINISTRATORE) {
++            return rsa.rimuoviDipendente(idDipendente);
++        }
++        throw new RuntimeException("Solo gli amministratori possono rimuovere i dipendenti");
+     }
++
+ }
+Index: src/it/unipv/posw/careconnectpro/model/persona/dipendente/Dipendente.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.unipv.posw.careconnectpro.model.persona.dipendente;\r\n\r\nimport it.unipv.posw.careconnectpro.model.persona.Persona;\r\n\r\nimport java.time.LocalDate;\r\n\r\npublic class Dipendente extends Persona implements IDipendente {\r\n\r\n\tprivate String idDipendente;\r\n\tprivate final String password;\r\n\tprivate TipoDipendente tipoDipendente;\r\n\tprivate LocalDate dataAssunzione;\r\n    private static final int MAX_PASSWORD = 8;\r\n\t\r\n\tpublic Dipendente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,\r\n\t\t\tString cellulare, String idDipendente, String password, TipoDipendente tipoDipendente, LocalDate dataAssunzione) {\r\n\t\tsuper(codiceFiscale, nome, cognome, dataNascita, email, cellulare);\r\n\t\tthis.idDipendente = idDipendente;\r\n\t\tthis.password = password;\r\n\t\tthis.tipoDipendente = tipoDipendente;\r\n\t\tthis.dataAssunzione = dataAssunzione;\r\n\t}\r\n\r\n\t@Override\r\n\tpublic String getIdDipendente() { return idDipendente; }\r\n\tpublic void setIdDipendente(String idDipendente) { this.idDipendente = idDipendente; }\r\n\r\n\t@Override\r\n\tpublic String getPassword() { return password; }\r\n\tpublic void setPassword(String password) { if (password != null && password.length() > MAX_PASSWORD) {\r\n        throw new IllegalArgumentException( \"La password supera gli \"+ MAX_PASSWORD +\" caratteri massimi consentiti\");\r\n    }\r\n    }\r\n\r\n\t@Override\r\n\tpublic TipoDipendente getTipoDipendente() { return tipoDipendente; }\r\n\tpublic void setTipoDipendente(TipoDipendente tipoDipendente) { this.tipoDipendente = tipoDipendente; }\r\n\r\n\t@Override\r\n\tpublic LocalDate getDataAssunzione() { return dataAssunzione; }\r\n\tpublic void setDataAssunzione(LocalDate dataAssunzione) { this.dataAssunzione = dataAssunzione; }\r\n\t\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/it/unipv/posw/careconnectpro/model/persona/dipendente/Dipendente.java b/src/it/unipv/posw/careconnectpro/model/persona/dipendente/Dipendente.java
+--- a/src/it/unipv/posw/careconnectpro/model/persona/dipendente/Dipendente.java	(revision 891594e03db67e583eb511644c237fc1df981a2f)
++++ b/src/it/unipv/posw/careconnectpro/model/persona/dipendente/Dipendente.java	(date 1768562385744)
+@@ -1,21 +1,24 @@
+ package it.unipv.posw.careconnectpro.model.persona.dipendente;
+ 
+-import it.unipv.posw.careconnectpro.model.persona.Persona;
+-
+ import java.time.LocalDate;
+ 
++import it.unipv.posw.careconnectpro.model.persona.Persona;
++
+ public class Dipendente extends Persona implements IDipendente {
+ 
++    private static final int MAX_PASSWORD = 8;
++    private static final int MIN_PASSWORD = 6;
++    
+ 	private String idDipendente;
+-	private final String password;
++	private String password;
+ 	private TipoDipendente tipoDipendente;
+ 	private LocalDate dataAssunzione;
+-    private static final int MAX_PASSWORD = 8;
+ 	
+ 	public Dipendente(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,
+ 			String cellulare, String idDipendente, String password, TipoDipendente tipoDipendente, LocalDate dataAssunzione) {
+ 		super(codiceFiscale, nome, cognome, dataNascita, email, cellulare);
+ 		this.idDipendente = idDipendente;
++		validaPassword(password);
+ 		this.password = password;
+ 		this.tipoDipendente = tipoDipendente;
+ 		this.dataAssunzione = dataAssunzione;
+@@ -27,10 +30,7 @@
+ 
+ 	@Override
+ 	public String getPassword() { return password; }
+-	public void setPassword(String password) { if (password != null && password.length() > MAX_PASSWORD) {
+-        throw new IllegalArgumentException( "La password supera gli "+ MAX_PASSWORD +" caratteri massimi consentiti");
+-    }
+-    }
++	public void setPassword(String password) {this.password = password;}
+ 
+ 	@Override
+ 	public TipoDipendente getTipoDipendente() { return tipoDipendente; }
+@@ -40,5 +40,11 @@
+ 	public LocalDate getDataAssunzione() { return dataAssunzione; }
+ 	public void setDataAssunzione(LocalDate dataAssunzione) { this.dataAssunzione = dataAssunzione; }
+ 	
++	
++	private void validaPassword(String password) {
++	    if (password == null)
++	        throw new IllegalArgumentException("Password nulla");
++	    if (password.length() < MIN_PASSWORD || password.length() > MAX_PASSWORD)
++	        throw new IllegalArgumentException("Password non valida");
++	}
+ }
+-
+Index: src/it/unipv/posw/careconnectpro/model/rsa/IResidenzaSanitariaAssistenziale.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.unipv.posw.careconnectpro.model.rsa;\r\n\r\nimport it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;\r\n\r\npublic interface IResidenzaSanitariaAssistenziale {\r\n\r\n\tboolean registrazioneDipendente(Dipendente d);\r\n\tDipendente loginDipendente (String cf, String pw);\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/it/unipv/posw/careconnectpro/model/rsa/IResidenzaSanitariaAssistenziale.java b/src/it/unipv/posw/careconnectpro/model/rsa/IResidenzaSanitariaAssistenziale.java
+--- a/src/it/unipv/posw/careconnectpro/model/rsa/IResidenzaSanitariaAssistenziale.java	(revision 891594e03db67e583eb511644c237fc1df981a2f)
++++ b/src/it/unipv/posw/careconnectpro/model/rsa/IResidenzaSanitariaAssistenziale.java	(date 1768562385760)
+@@ -5,6 +5,6 @@
+ public interface IResidenzaSanitariaAssistenziale {
+ 
+ 	boolean registrazioneDipendente(Dipendente d);
+-	Dipendente loginDipendente (String cf, String pw);
++	boolean rimuoviDipendente(String idDipendente);
+ 
+ }
+Index: src/it/unipv/posw/careconnectpro/jdbc/FacadeSingletonDB.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.unipv.posw.careconnectpro.jdbc;\r\n\r\nimport it.unipv.posw.careconnectpro.jdbc.bean.dipendente.DipendenteDAO;\r\nimport it.unipv.posw.careconnectpro.jdbc.bean.dipendente.DipendenteDB;\r\nimport it.unipv.posw.careconnectpro.jdbc.bean.dipendente.IDipendenteDAO;\r\nimport it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;\r\nimport it.unipv.posw.careconnectpro.model.persona.dipendente.FactoryDipendente;\r\n\r\npublic class FacadeSingletonDB {\r\n\r\n\tprivate static FacadeSingletonDB istanzaDB;\r\n\r\n\tprivate IDipendenteDAO dipendenteDAO;\r\n\t\r\n\r\n    private FacadeSingletonDB() {\r\n        dipendenteDAO = new DipendenteDAO();\r\n    }\r\n\r\n    public static FacadeSingletonDB getIstanzaFacade() {\r\n\t\tif(istanzaDB == null) {\r\n\t\t\tistanzaDB = new FacadeSingletonDB();\r\n\t\t}\r\n\t\treturn istanzaDB;\r\n\t}\r\n    \r\n    public Dipendente loginDipendente(String cf, String password) {\r\n        DipendenteDB db = dipendenteDAO.selectDipendenteByCfAndPw(cf, password);\r\n        if (db == null) return null;\r\n        return FactoryDipendente.creaDipendente(db.getRuolo(),\r\n            db.getCodiceFiscale(),\r\n            db.getNome(),\r\n            db.getCognome(),\r\n            db.getDataNascita(),\r\n            db.getEmail(),\r\n            db.getNumeroTelefonico(),\r\n            db.getIdDipendente(),\r\n            db.getPassword(),\r\n            db.getDataInizio()\r\n        );\r\n    }\r\n\r\n    public boolean insertDipendente(Dipendente d) {\r\n        DipendenteDB db = new DipendenteDB(\r\n                d.getCodiceFiscale(),\r\n                d.getNome(),\r\n                d.getCognome(),\r\n                d.getDataNascita(),\r\n                d.getEmail(),\r\n                d.getCellulare(),\r\n                d.getIdDipendente(),\r\n                d.getPassword(),\r\n                d.getTipoDipendente().name(),\r\n                d.getDataAssunzione());\r\n        return dipendenteDAO.insertDipendente(db);\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/it/unipv/posw/careconnectpro/jdbc/FacadeSingletonDB.java b/src/it/unipv/posw/careconnectpro/jdbc/FacadeSingletonDB.java
+--- a/src/it/unipv/posw/careconnectpro/jdbc/FacadeSingletonDB.java	(revision 891594e03db67e583eb511644c237fc1df981a2f)
++++ b/src/it/unipv/posw/careconnectpro/jdbc/FacadeSingletonDB.java	(date 1768562385728)
+@@ -16,6 +16,7 @@
+     private FacadeSingletonDB() {
+         dipendenteDAO = new DipendenteDAO();
+     }
++    
+ 
+     public static FacadeSingletonDB getIstanzaFacade() {
+ 		if(istanzaDB == null) {
+@@ -24,22 +25,36 @@
+ 		return istanzaDB;
+ 	}
+     
+-    public Dipendente loginDipendente(String cf, String password) {
+-        DipendenteDB db = dipendenteDAO.selectDipendenteByCfAndPw(cf, password);
++    
++    public IDipendenteDAO getDipendenteDAO() {
++		return dipendenteDAO;
++	}
++
++
++	public void setDipendenteDAO(IDipendenteDAO dipendenteDAO) {
++		this.dipendenteDAO = dipendenteDAO;
++	}
++
++
++	public Dipendente findDipendenteByCf(String cf) {
++        DipendenteDB db = dipendenteDAO.selectDipendenteByCf(cf);
+         if (db == null) return null;
+-        return FactoryDipendente.creaDipendente(db.getRuolo(),
+-            db.getCodiceFiscale(),
+-            db.getNome(),
+-            db.getCognome(),
+-            db.getDataNascita(),
+-            db.getEmail(),
+-            db.getNumeroTelefonico(),
+-            db.getIdDipendente(),
+-            db.getPassword(),
+-            db.getDataInizio()
++        Dipendente dipendente = FactoryDipendente.getDipendente(
++                db.getRuolo(),                
++                db.getCodiceFiscale(),
++                db.getNome(),
++                db.getCognome(),
++                db.getDataNascita(),
++                db.getEmail(),
++                db.getNumeroTelefonico(),
++                db.getIdDipendente(),
++                db.getPassword(),
++                db.getDataInizio()
+         );
++        return dipendente;
+     }
+ 
++	
+     public boolean insertDipendente(Dipendente d) {
+         DipendenteDB db = new DipendenteDB(
+                 d.getCodiceFiscale(),
+@@ -54,5 +69,9 @@
+                 d.getDataAssunzione());
+         return dipendenteDAO.insertDipendente(db);
+     }
++    
++    public boolean deleteDipendente(String idDipendente) {
++        return dipendenteDAO.deleteDipendenteById(idDipendente);
++    }
+ 
+ }
+Index: src/it/unipv/posw/careconnectpro/model/persona/Persona.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.unipv.posw.careconnectpro.model.persona;\r\n\r\nimport java.time.LocalDate;\r\n\r\npublic abstract class Persona {\r\n\r\n\tprivate String codiceFiscale;\r\n\tprivate String nome;\r\n\tprivate String cognome;\r\n\tprivate LocalDate dataNascita;\r\n\tprivate String email;\r\n\tprivate String cellulare;\r\n\t\r\n\tpublic Persona(String codiceFiscale, String nome, String cognome, LocalDate dataNascita, String email,\r\n\t\t\tString cellulare) {\r\n\t\tsuper();\r\n\t\tthis.codiceFiscale = codiceFiscale;\r\n\t\tthis.nome = nome;\r\n\t\tthis.cognome = cognome;\r\n\t\tthis.dataNascita = dataNascita;\r\n\t\tthis.email = email;\r\n\t\tthis.cellulare = cellulare;\r\n\t}\r\n\r\n\tpublic String getCodiceFiscale() { return codiceFiscale; }\r\n\tpublic void setCodiceFiscale(String codiceFiscale) { this.codiceFiscale = codiceFiscale; }\r\n\r\n\tpublic String getNome() { return nome; }\r\n\tpublic void setNome(String nome) { this.nome = nome; }\r\n\r\n\tpublic String getCognome() { return cognome; }\r\n\tpublic void setCognome(String cognome) { this.cognome = cognome; }\r\n\r\n\tpublic LocalDate getDataNascita() { return dataNascita; }\r\n\tpublic void setDataNascita(LocalDate dataNascita) { this.dataNascita = dataNascita; }\r\n\r\n\tpublic String getEmail() { return email; }\r\n\tpublic void setEmail(String email) { this.email = email; }\r\n\r\n\tpublic String getCellulare() { return cellulare; }\r\n\tpublic void setCellulare(String cellulare) { this.cellulare = cellulare; }\r\n\t\t\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/it/unipv/posw/careconnectpro/model/persona/Persona.java b/src/it/unipv/posw/careconnectpro/model/persona/Persona.java
+--- a/src/it/unipv/posw/careconnectpro/model/persona/Persona.java	(revision 891594e03db67e583eb511644c237fc1df981a2f)
++++ b/src/it/unipv/posw/careconnectpro/model/persona/Persona.java	(date 1768562385739)
+@@ -40,4 +40,4 @@
+ 	public String getCellulare() { return cellulare; }
+ 	public void setCellulare(String cellulare) { this.cellulare = cellulare; }
+ 		
+-}
+\ No newline at end of file
++}

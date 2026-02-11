@@ -2,11 +2,9 @@ package it.unipv.posw.careconnectpro.controller.utenti.medico;
 
 
 import it.unipv.posw.careconnectpro.controller.utenti.medico.button.BtnMonitoraggioActionListener;
-import it.unipv.posw.careconnectpro.model.cartellaclinica.monitoraggio.Monitoraggio;
 import it.unipv.posw.careconnectpro.model.rsa.IRSA;
 import it.unipv.posw.careconnectpro.view.ViewController;
 
-import java.util.List;
 
 public class MedController {
     private IRSA model;
@@ -16,46 +14,62 @@ public class MedController {
     private TerapiaController terapiaController;
 
 
-
     public MedController(IRSA model, ViewController view) {
-        this.model = model;
-        this.view = view;
+        this.setModel(model);
+        this.setView(view);
 
-        monitoraggioBtn = new BtnMonitoraggioActionListener(view);
+        monitoraggioBtn = new BtnMonitoraggioActionListener(view,model);
         view.getMedPanel().getOpenButton().addActionListener(monitoraggioBtn);
-        monitoraggioController = new MonitoraggioController(model, view);
-        terapiaController = new TerapiaController (model, view);
+        setMonitoraggioController(new MonitoraggioController(model, view));
+        setTerapiaController(new TerapiaController (model, view));
 
     }
 
-    public TerapiaController getTerapiaController() {
-        return terapiaController;
-    }
-    public void setTerapiaController(TerapiaController terapiaController) {
-        this.terapiaController = terapiaController;
-    }
-    public MonitoraggioController getMonitoraggioController() {
-        return monitoraggioController;
-    }
-    public void setMonitoraggioController(MonitoraggioController monitoraggioController) {
-        this.monitoraggioController = monitoraggioController;
-    }
-    public BtnMonitoraggioActionListener getMonitoraggioBtn() {
-        return monitoraggioBtn;
-    }
-    public void setMonitoraggioBtn(BtnMonitoraggioActionListener monitoraggioBtn) {
-        this.monitoraggioBtn = monitoraggioBtn;
-    }
-    public ViewController getView() {
-        return view;
-    }
-    public void setView(ViewController view) {
-        this.view = view;
-    }
-    public IRSA getModel() {
-        return model;
-    }
-    public void setModel(IRSA model) {
-        this.model = model;
-    }
+	public IRSA getModel() {
+		return model;
+	}
+
+
+
+	public void setModel(IRSA model) {
+		this.model = model;
+	}
+
+
+
+	public ViewController getView() {
+		return view;
+	}
+
+
+
+	public void setView(ViewController view) {
+		this.view = view;
+	}
+
+
+
+	public MonitoraggioController getMonitoraggioController() {
+		return monitoraggioController;
+	}
+
+
+
+	public void setMonitoraggioController(MonitoraggioController monitoraggioController) {
+		this.monitoraggioController = monitoraggioController;
+	}
+
+
+
+	public TerapiaController getTerapiaController() {
+		return terapiaController;
+	}
+
+
+
+	public void setTerapiaController(TerapiaController terapiaController) {
+		this.terapiaController = terapiaController;
+	}
+
+
 }

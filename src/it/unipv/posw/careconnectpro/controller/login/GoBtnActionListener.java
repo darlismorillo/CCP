@@ -2,7 +2,8 @@ package it.unipv.posw.careconnectpro.controller.login;
 
 import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
-import it.unipv.posw.careconnectpro.model.rsa.RSAService;
+import it.unipv.posw.careconnectpro.model.rsa.IRSA;
+import it.unipv.posw.careconnectpro.model.rsa.ProxyRSA;
 import it.unipv.posw.careconnectpro.view.PopUp;
 import it.unipv.posw.careconnectpro.view.ViewController;
 
@@ -12,18 +13,17 @@ import java.awt.event.ActionListener;
 public class GoBtnActionListener implements ActionListener {
 
     private ViewController view;
-    private RSAService model;
+    private IRSA model;
 
-    public GoBtnActionListener(ViewController view, RSAService model) {
+    public GoBtnActionListener(ViewController view, IRSA model) {
         this.view = view;
-        this.model = model;
+        this.model = ProxyRSA.getProxy();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String cf = view.getLoginPanel().getCfField().getText();
-        String password = String.valueOf(view.getLoginPanel().getPasswordField().getPassword());;
-
+        String password = String.valueOf(view.getLoginPanel().getPasswordField().getPassword());
         Dipendente utenteLoggato = model.login(cf,password);
         if(utenteLoggato == null) {
             PopUp.infoBox("Username e/o password non validi", "Login non valido");
@@ -36,7 +36,6 @@ public class GoBtnActionListener implements ActionListener {
         view.getLoginPanel().setVisible(false);
         model.setUtenteLoggato(utenteLoggato);
 
-//        if(utenteLoggato != null) {
             switch (ruolo) {
                 case AMMINISTRATORE:
                     view.getLoginPanel().setVisible(false);
@@ -53,13 +52,12 @@ public class GoBtnActionListener implements ActionListener {
                 case INFERMIERE:
                     view.getLoginPanel().setVisible(false);
                     view.getInfPanel().setVisible(true);
+                    
                 default:
                     break;
             }
         }
-//        else {
-//            PopUp.infoBox("Username o password incorretti", "Errore");
-//        }
+
 
     private void pulisciTextField(){
         view.getLoginPanel().getCfField().setText(null);
@@ -67,8 +65,5 @@ public class GoBtnActionListener implements ActionListener {
     }
 
 
+}
 
-
-    }
-
-//}

@@ -13,15 +13,25 @@ import it.unipv.posw.careconnectpro.model.persona.TipoUtente;
 
 public class ProxyRSA implements IRSA {
 
-    private final RSAService rsa;
-    private final Persona utenteLoggato;
+    private RSAService rsa;
+    private Dipendente utenteLoggato;
+    private static ProxyRSA proxy;
 
-    public ProxyRSA(Dipendente utenteLoggato) {
-        this.utenteLoggato = utenteLoggato;
+    private ProxyRSA() {
+        this.setUtenteLoggato(utenteLoggato);
         this.rsa = new RSAService();
     }
-
-    @Override
+    
+    // SINGLETON
+    public static ProxyRSA getProxy () {
+        if (proxy == null) {
+            proxy = new ProxyRSA();
+        }
+        return proxy; 
+    }
+    
+   
+	@Override
     public boolean registraUtente(Persona persona) {
         if(utenteLoggato != null  && utenteLoggato.getTipoUtente() == TipoUtente.AMMINISTRATORE) {
             return rsa.registraUtente(persona);
@@ -45,6 +55,17 @@ public class ProxyRSA implements IRSA {
             return rsa.disattivaUtente(cf);
         }
         throw new RuntimeException("Solo gli amministratori possono rimuovere le persone");
+    }
+    
+    @Override
+    public Dipendente login(String cf, String pw)	{
+    		Dipendente d = rsa.cercaDipendenteByCf(cf);
+        if(d != null) {
+        		setUtenteLoggato(d);
+            return rsa.login(cf,pw);
+        }
+        System.out.println("Solo i dipendenti possono accedere");	
+        return null;
     }
     
     @Override
@@ -126,8 +147,13 @@ public class ProxyRSA implements IRSA {
     public CartellaClinica cercaCartellaClinicaByCf(String cf) {
             if(utenteLoggato != null  && utenteLoggato.getTipoUtente() == TipoUtente.MEDICO
                     || utenteLoggato.getTipoUtente() == TipoUtente.INFERMIERE) {
+            	return rsa.cercaCartellaClinicaByCf(cf);
         }
         throw new RuntimeException("Solo i medici e infermieri possono cercare una cartella clinica ");
+    }
+    
+    public void setUtenteLoggato(Dipendente utenteLoggato) {
+        this.utenteLoggato = utenteLoggato;
     }
 
 }

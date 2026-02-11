@@ -15,18 +15,10 @@ import it.unipv.posw.careconnectpro.model.persona.dipendente.Dipendente;
 public class RSAService implements IRSA {
 	
     private final FacadeSingletonDB facadeDB;
-    private Dipendente utenteLoggato = null;
+    private Dipendente utenteLoggato= null;
     
     public RSAService() {
         facadeDB = FacadeSingletonDB.getIstanza();
-    }
-    public RSAService(FacadeSingletonDB facadeDB) {
-        this.facadeDB = facadeDB;
-    }
-
-
-    public FacadeSingletonDB getFacadeDB() {
-        return facadeDB;
     }
 
     
@@ -83,15 +75,15 @@ public class RSAService implements IRSA {
 	    	return true;
     }
     
-
+	@Override
     public Dipendente login (String cf, String password) {
         Dipendente d = facadeDB.findDipendenteAttivoByCf(cf);
         if (d == null) {
-            System.out.println("Logout effetuato");
+            System.out.println("Utente non trovato");
             return null;
         }
         if (d.getPassword().equals(password)){
-            System.out.println("Login Dipendente avvenuta con successo " + password);
+            System.out.println("Login Dipendente avvenuto con successo ");
             return d;
         }
 
@@ -154,8 +146,9 @@ public class RSAService implements IRSA {
 
     @Override
     public Dipendente cercaDipendenteByCf(String cf) {
-        return facadeDB.findDipendenteByCf(cf);
+        return facadeDB.findDipendenteAttivoByCf(cf);
     }
+    
     @Override
     public Dipendente getUtenteLoggato() {
         return utenteLoggato;
@@ -171,11 +164,14 @@ public class RSAService implements IRSA {
         return facadeDB.findCartellaClinicaByCf(cf);
     }
 
-
+    @Override
     public void setUtenteLoggato(Dipendente utenteLoggato) {
         this.utenteLoggato = utenteLoggato;
     }
 
+    public FacadeSingletonDB getFacadeDB() {
+        return facadeDB;
+    }
 
 }
 
