@@ -1,0 +1,39 @@
+@startuml
+package "rsa" {
+    interface IRSA <<interface>> #FFFFFF {
+        + registraUtente(p: Persona): boolean
+        + login(cf: String, pw: String): Dipendente
+        + creaTerapia(t: Terapia): int
+        + creaMonitoraggio(m: Monitoraggio): int
+        + cercaPazienti(): List<Paziente>
+        + ...()
+    }
+
+    class RSAService #FFFFFF {
+        - facadeDB: FacadeSingletonDB
+        + registraUtente(p: Persona): boolean
+        + creaTerapia(t: Terapia): int
+        + ...()
+    }
+
+    class ProxyRSA << (S,#0072B2) Singleton >> #FFFFFF {
+        - {static} proxy: ProxyRSA
+        - rsa: RSAService
+        - utenteLoggato: Dipendente
+        --
+        + {static} getProxy(): ProxyRSA
+        + registraUtente(p: Persona): boolean
+        + creaTerapia(t: Terapia): int
+        + ...()
+    }
+
+}
+' Relazioni
+IRSA <|.. RSAService
+IRSA <|.. ProxyRSA
+ProxyRSA o--> RSAService : delega
+
+
+
+
+@enduml

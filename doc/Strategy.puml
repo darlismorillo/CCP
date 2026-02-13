@@ -1,0 +1,40 @@
+@startuml
+
+package "Cartella Clinica" {
+class Monitoraggio {
+    - alert: Alert
+    - valore: String
+    - tipiParametroVitale: TipiParametroVitale
+    + Monitoraggio(...)
+    - setAlert(): Alert
+}
+
+class StrategyAlert << (S,#FF7700) Utility >> {
+    + {static} controlla(tipo: TipiParametroVitale, valore: String): Alert
+}
+
+enum TipiParametroVitale {
+    FREQUENZA_CARDIACA
+    PRESSIONE_ARTERIOSA
+    SATURAZIONE
+    TEMPERATURA
+}
+
+enum Alert {
+    ATTIVO
+    INATTIVO
+    RISOLTO
+}
+
+class Pressione {
+    + isCritica(): boolean
+}
+}
+' Relazioni
+Monitoraggio ..> StrategyAlert : "usa tramite setAlert()"
+StrategyAlert ..> TipiParametroVitale : "decide in base a"
+StrategyAlert ..> Pressione : "instanzia per pressione"
+StrategyAlert ..> Alert : "restituisce"
+
+
+@enduml

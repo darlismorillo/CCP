@@ -1,0 +1,50 @@
+
+@startuml
+
+package "view" #FFF9C4{
+
+    class ViewController << (F,#FF7700) JFrame >> {
+        - loginPanel: LoginPanel
+        - ammPanel: AmmPanel
+        - medPanel: MedPanel
+        - infPanel: InfPanel
+        + ViewController()
+    }
+
+    package "Login" {
+        class LoginPanel <<JPanel>>
+        class PopUp <<Utility>>
+    }
+
+    package "Amministratore" {
+        class AmmPanel <<JPanel>>
+        class RegistrazioneUtentePanel <<JPanel>>
+    }
+
+    package "Medico" {
+        class MedPanel <<JPanel>>
+        class ListMonitoraggioPanel <<JPanel>>
+        class TerapiaPanel <<JPanel>>
+    }
+
+    package "Infermiere" {
+        class InfPanel <<JPanel>>
+        class GestionePazientePanel <<JPanel>>
+        class MonitoraggioPanel <<JPanel>>
+    }
+}
+
+
+ViewController *-- LoginPanel
+ViewController *-- AmmPanel
+ViewController *-- MedPanel
+ViewController *-- InfPanel
+
+' Sotto-pannelli richiamati
+AmmPanel ..> RegistrazioneUtentePanel
+MedPanel ..> ListMonitoraggioPanel
+ListMonitoraggioPanel ..> TerapiaPanel
+InfPanel ..> GestionePazientePanel
+GestionePazientePanel ..> MonitoraggioPanel
+
+@enduml

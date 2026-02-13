@@ -39,7 +39,7 @@ class Paziente {
 
 package "Dipendenti" <<Folder>> {
 
-class Dipendente{
+abstract class Dipendente{
     + setPassword()
     }
 
@@ -65,7 +65,7 @@ Persona -- TipoUtente
 Persona <|--  Dipendente
 Persona <|-- Paziente
 Dipendente <|--Infermiere
-Dipendente <|- Medico
+Dipendente <|-- Medico
 Dipendente <|-Amministratore
 
 

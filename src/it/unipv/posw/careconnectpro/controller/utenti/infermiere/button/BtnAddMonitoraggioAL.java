@@ -17,7 +17,7 @@ public class BtnAddMonitoraggioAL implements ActionListener {
     private int rigaSelezionata;
    
 
-    public  BtnAddMonitoraggioAL(IRSA model, ViewController view) {
+    public BtnAddMonitoraggioAL(IRSA model, ViewController view) {
         this.model = model;
         this.view = view;
     }

@@ -28,7 +28,6 @@ public class BtnMonitoraggioActionListener implements ActionListener {
         view.getLoginPanel().setVisible(false);
         view.getMedPanel().setVisible(false);
         updateMonitoraggi();
-       
         view.getListMonitoraggioPanel().setVisible(true);
         view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
