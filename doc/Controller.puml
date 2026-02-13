@@ -1,0 +1,44 @@
+@startuml
+
+skinparam linetype ortho
+
+
+
+package "controller" #E1F5FE {
+    class FacadeController {
+        - loginController: LoginController
+        - ammController: AmmController
+        - medController: MedController
+        - infController: InfController
+    }
+
+    package "Controllers per Ruolo" {
+        class LoginController {
+            - go: GoBtnActionListener
+            - logout: LogoutActionListener
+        }
+
+        class AmmController {
+            - regController: RegistrazioneController
+            - btnRegistrazione: BtnRegistraUtenteAL
+            - eliminaUtente: DisattivaUtenteAL
+        }
+
+        class MedController {
+            - monitoraggioController: MonitoraggioController
+            - terapiaController: TerapiaController
+        }
+
+        class InfController {
+            - gestioneController: GestioniPazientiController
+            - addMonitoraggioController: AddMonitoraggioController
+        }
+    }
+}
+
+' Relazioni Facade
+FacadeController *-- "Controllers per Ruolo"
+
+
+
+@enduml
